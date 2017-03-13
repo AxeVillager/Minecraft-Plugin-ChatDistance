@@ -1,0 +1,26 @@
+name: ChatDistance
+version: 1.0
+main: com.baol.chatdistance.Main
+author: Axe_Villager
+description: A plugin that lets you modify the chat
+
+permissions:
+    chatdistance.*:
+        children:
+            chatdistance.shout: true
+            chatdistance.whisper: true
+            chatdistance.global: true
+            chatdistance.formatting: true
+        default: op
+    chatdistance.whisper:
+        description: Allows you to whisper chat messages
+        default: true
+    chatdistance.shout:
+        description: Allows you to shout chat messages
+        default: true
+    chatdistance.global:
+        description: Allows you to send a global message
+        default: op
+    chatdistance.formatting:
+        description: Allows you to use formatting codes in chat messages
+        default: op
