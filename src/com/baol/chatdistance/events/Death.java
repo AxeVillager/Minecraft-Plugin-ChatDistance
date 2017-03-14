@@ -2,6 +2,7 @@ package com.baol.chatdistance.events;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,7 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 
-import static com.baol.chatdistance.other.Other.*;
+import static com.baol.chatdistance.other.Utilities.*;
 
 /**
  * Death created by Børre A. Opedal Lunde on 2017/03/12
@@ -30,12 +31,15 @@ public class Death implements Listener {
      */
     public Death(final JavaPlugin plugin) {
 
-        LOCAL_DEATH_MESSAGES = plugin.getConfig().getBoolean("local death messages", true);
-        DEATH_MESSAGES_RANGE = plugin.getConfig().getDouble("death messages range", 250);
-        DEATH_MESSAGE_COLOUR = getChatColor(plugin.getConfig().getString("death messages colour", "WHITE"), ChatColor.WHITE);
-        DEATH_MESSAGE_TYPOGRAPHY = getChatColor(plugin.getConfig().getString("death messages typography", "RESET"), ChatColor.RESET);
-        LIST_RECEIVERS = plugin.getConfig().getBoolean("death message receivers", true);
-        RECEIVED_DISTANCE = plugin.getConfig().getBoolean("received death message distance", true);
+        // The configuration file
+        final FileConfiguration config = plugin.getConfig();
+
+        LOCAL_DEATH_MESSAGES = config.getBoolean("local death messages", true);
+        DEATH_MESSAGES_RANGE = config.getDouble("death messages range", 250);
+        DEATH_MESSAGE_COLOUR = getChatColor(config.getString("death messages colour", "WHITE"), ChatColor.WHITE);
+        DEATH_MESSAGE_TYPOGRAPHY = getChatColor(config.getString("death messages typography", "RESET"), ChatColor.RESET);
+        LIST_RECEIVERS = config.getBoolean("death message receivers", true);
+        RECEIVED_DISTANCE = config.getBoolean("received death message distance", true);
     }
 
 
@@ -79,7 +83,7 @@ public class Death implements Listener {
                             if (RECEIVED_DISTANCE) {
 
                                 // Add the recipient to the recipients list (with distance)
-                                recipientsList.add(recipient.getName() + " (distance: " + formatNumber(recipientDistance) + ") ");
+                                recipientsList.add(recipient.getName() + " (distance: " + formatNumber(recipientDistance) + ")");
 
                             } else {
 
@@ -110,21 +114,12 @@ public class Death implements Listener {
         }
 
         // Notify the console who died and how
-        Bukkit.getConsoleSender().sendMessage(makeCompletelyReset(deathMessage));
+        Bukkit.getConsoleSender().sendMessage(makeMessageTypography(deathMessage, ChatColor.RESET));
 
 
-        // Check if the local death messages option is true
-        if (LOCAL_DEATH_MESSAGES) {
-
-            // Check if the "list death message receivers" option is true
-            if (LIST_RECEIVERS) {
-
-                // Notify the console who received the death message
-                Bukkit.getConsoleSender().sendMessage("Players that received the death message (" + recipientsList.size() + "): " + createTextList(recipientsList));
-
-            }
-
-        }
+        // Check if the local death messages option is true and the "list death message receivers" option is true -> Notify the console who received the death message
+        if (LOCAL_DEATH_MESSAGES && LIST_RECEIVERS) Bukkit.getConsoleSender().sendMessage(
+                    "Players that received the death message("+ recipientsList.size() + "): " + createTextList(recipientsList));
 
     }
 

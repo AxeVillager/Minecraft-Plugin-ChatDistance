@@ -1,6 +1,8 @@
 package com.baol.chatdistance.events;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,7 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 
-import static com.baol.chatdistance.other.Other.*;
+import static com.baol.chatdistance.other.Utilities.*;
 
 /**
  * JoinAndDisconnect created by Børre A. Opedal Lunde on 2017/03/12
@@ -30,12 +32,15 @@ public class JoinAndDisconnect implements Listener {
      */
     public JoinAndDisconnect(final JavaPlugin plugin) {
 
-        LOCAL_JOIN_AND_LEAVE_MESSAGES = plugin.getConfig().getBoolean("local join/leave messages", true);
-        JOIN_AND_LEAVE_MESSAGES_RANGE = plugin.getConfig().getDouble("join/leave message range", 250);
-        JOIN_MESSAGE = plugin.getConfig().getString("join message", "&ename joined the game");
-        LEAVE_MESSAGE = plugin.getConfig().getString("leave message", "&ename left the game");
-        LIST_RECEIVERS = plugin.getConfig().getBoolean("join/leave message receivers", true);
-        RECEIVED_DISTANCE = plugin.getConfig().getBoolean("received join/leave message distance", true);
+        // The configuration file
+        final FileConfiguration config = plugin.getConfig();
+
+        LOCAL_JOIN_AND_LEAVE_MESSAGES = config.getBoolean("local join/leave messages", true);
+        JOIN_AND_LEAVE_MESSAGES_RANGE = config.getDouble("join/leave message range", 250);
+        JOIN_MESSAGE = config.getString("join message", "&ename joined the game");
+        LEAVE_MESSAGE = config.getString("leave message", "&ename left the game");
+        LIST_RECEIVERS = config.getBoolean("join/leave message receivers", true);
+        RECEIVED_DISTANCE = config.getBoolean("received join/leave message distance", true);
     }
 
     /**
@@ -81,7 +86,7 @@ public class JoinAndDisconnect implements Listener {
                             if (RECEIVED_DISTANCE) {
 
                                 // Add the recipient's name to the recipients list (with distance)
-                                recipientsList.add(recipient.getName() + " (distance: " + formatNumber(recipientDistance) + ") ");
+                                recipientsList.add(recipient.getName() + " (distance: " + formatNumber(recipientDistance) + ")");
 
                             } else {
 
@@ -112,7 +117,7 @@ public class JoinAndDisconnect implements Listener {
         }
 
         // Notify the console who joined
-        Bukkit.getConsoleSender().sendMessage(makeCompletelyReset(joinMessage));
+        Bukkit.getConsoleSender().sendMessage(makeMessageTypography(joinMessage, ChatColor.RESET));
 
 
         // Check if the local join and leave messages option is true
@@ -173,7 +178,7 @@ public class JoinAndDisconnect implements Listener {
                             if (RECEIVED_DISTANCE) {
 
                                 // Add the recipient's name to the recipients list (with distance)
-                                recipientsList.add(recipient.getName() + " (distance: " + formatNumber(recipientDistance) + ") ");
+                                recipientsList.add(recipient.getName() + " (distance: " + formatNumber(recipientDistance) + ")");
 
                             } else {
 
@@ -204,7 +209,7 @@ public class JoinAndDisconnect implements Listener {
         }
 
         // Notify the console who left
-        Bukkit.getConsoleSender().sendMessage(makeCompletelyReset(leaveMessage));
+        Bukkit.getConsoleSender().sendMessage(makeMessageTypography(leaveMessage, ChatColor.RESET));
 
 
         // Check if the local join and leave messages option is true
