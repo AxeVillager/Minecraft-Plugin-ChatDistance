@@ -30,7 +30,7 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new Death(this), this);
 
         // Notify the console the plugin has been enabled
-        Bukkit.getConsoleSender().sendMessage("§a" + this + " has been enabled!");
+        Bukkit.getConsoleSender().sendMessage("§2" + this + " has been enabled!");
     }
 
 

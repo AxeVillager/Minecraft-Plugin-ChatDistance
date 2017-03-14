@@ -5,7 +5,7 @@
 # |                                                      |
 # |  - Author: Axe_Villager                              |
 # |  - Version: 1.0                                      |
-# |  - Last updated on: 2017/03/13                       |
+# |  - Last updated on: 2017/03/14                       |
 # |  - Tested on Java: 8, Minecraft: 1.11.2              |
 # |                                                      |
 # +------------------------------------------------------+
@@ -296,7 +296,8 @@ death messages colour: "GRAY"
 
 
 
-# The typography of the death messages.
+# The typography of the death messages. The different
+# typography options are as following:
 #   - MAGIC, BOLD, STRIKETHROUGH, UNDERLINE, ITALIC, RESET
 
 death messages typography: "ITALIC"
