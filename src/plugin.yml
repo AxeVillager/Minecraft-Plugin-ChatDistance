@@ -22,5 +22,5 @@ permissions:
         description: Allows you to send a global message
         default: op
     chatdistance.formatting:
-        description: Allows you to use formatting codes in chat messages
+        description: Allows you to use colour and formatting codes in chat messages
         default: op

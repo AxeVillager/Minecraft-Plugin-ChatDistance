@@ -24,13 +24,13 @@ public class Main extends JavaPlugin {
         // The plugin manager
         final PluginManager pm = Bukkit.getPluginManager();
 
-        // Notify the console the plugin has been enabled
-        Bukkit.getConsoleSender().sendMessage("§a" + this + " has been enabled!");
-
         // Register events
         pm.registerEvents(new Chat(this), this);
         pm.registerEvents(new JoinAndDisconnect(this), this);
         pm.registerEvents(new Death(this), this);
+
+        // Notify the console the plugin has been enabled
+        Bukkit.getConsoleSender().sendMessage("§a" + this + " has been enabled!");
     }
 
 

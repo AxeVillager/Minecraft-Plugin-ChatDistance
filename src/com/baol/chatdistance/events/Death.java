@@ -67,39 +67,32 @@ public class Death implements Listener {
             // The recipient's distance to the player that dies
             final double recipientDistance = recipient.getLocation().distance(player.getLocation());
 
-            // Check if local death messages are turned on
-            if (LOCAL_DEATH_MESSAGES) {
+            // Check if local death messages are turned on and the recipient and the player that dies are in the
+            // same world and recipient's distance to the sender is less or equal to the death messages range
+            if (LOCAL_DEATH_MESSAGES &&
+                    recipient.getLocation().getWorld() == player.getLocation().getWorld() &&
+                    recipientDistance <= DEATH_MESSAGES_RANGE) {
 
-                // Check if the recipient and the player that dies are in the same world
-                if (recipient.getLocation().getWorld() == player.getLocation().getWorld()) {
+                // Check if the recipient is not the player that dies
+                if (recipient != player) {
 
-                    // Check if the recipient's distance to the sender is less or equal to the death messages range
-                    if (recipientDistance <= DEATH_MESSAGES_RANGE) {
+                    // Check if the "death message receivers distance" option is true
+                    if (RECEIVED_DISTANCE) {
 
-                        // Check if the recipient is not the player that dies
-                        if (recipient != player) {
+                        // Add the recipient to the recipients list (with distance)
+                        recipientsList.add(recipient.getName() + " (distance: " + formatNumber(recipientDistance) + ")");
 
-                            // Check if the "death message receivers distance" option is true
-                            if (RECEIVED_DISTANCE) {
+                    } else {
 
-                                // Add the recipient to the recipients list (with distance)
-                                recipientsList.add(recipient.getName() + " (distance: " + formatNumber(recipientDistance) + ")");
-
-                            } else {
-
-                                // Add the recipient to the recipients list
-                                recipientsList.add(recipient.getName() + " ");
-
-                            }
-
-                        }
-
-                        // Send the death message to the recipient
-                        recipient.sendMessage(deathMessage);
+                        // Add the recipient to the recipients list
+                        recipientsList.add(recipient.getName() + " ");
 
                     }
 
                 }
+
+                // Send the death message to the recipient
+                recipient.sendMessage(deathMessage);
 
             }
 
@@ -118,8 +111,8 @@ public class Death implements Listener {
 
 
         // Check if the local death messages option is true and the "list death message receivers" option is true -> Notify the console who received the death message
-        if (LOCAL_DEATH_MESSAGES && LIST_RECEIVERS) Bukkit.getConsoleSender().sendMessage(
-                    "Players that received the death message("+ recipientsList.size() + "): " + createTextList(recipientsList));
+        if (LOCAL_DEATH_MESSAGES && LIST_RECEIVERS) Bukkit.getConsoleSender().sendMessage
+                ("The players that received the death message ("+ recipientsList.size() + "): " + createTextList(recipientsList));
 
     }
 

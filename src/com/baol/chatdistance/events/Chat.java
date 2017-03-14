@@ -133,12 +133,10 @@ public class Chat implements Listener {
         String message = event.getMessage();
 
         // Check if the sender has permission to use chat formatting codes
-        if (sender.hasPermission("chatdistance.formatting")) {
+        if (sender.hasPermission("chatdistance.formatting"))
 
             // Make the message formatted correctly where & is only replaced with § when there is a formatting code
             message = makeFormatted(message);
-
-        }
 
 
         // The amount of chat format symbols (§) in the message
@@ -228,12 +226,10 @@ public class Chat implements Listener {
             chatRange += (SHOUT_RANGE_INCREASE * exclamationMarks);
 
             // Check if the bold chat when shouting is enabled
-            if (SHOUT_BOLD) {
+            if (SHOUT_BOLD)
 
                 // Make the message bold on every letter
                 message = makeMessageTypography(message, ChatColor.BOLD);
-
-            }
 
         }
 
@@ -251,6 +247,7 @@ public class Chat implements Listener {
         // Set the whisper symbols value equal to the max value if exceeded
         whisperSymbols = Math.min(whisperSymbols, MAX_WHISPER_LEVEL);
 
+
         // Check if the parenthesis nests are greater than zero and parenthesis is turned on OR whisper symbols are greater than zero and whisper symbols is turned on AND sender has permission to whisper
         if (((parenthesisNests > 0 && WHISPER_PARENTHESISES) || (whisperSymbols > 0
                 && WHISPER_TILDE)) && sender.hasPermission("chatdistance.whisper")) {
@@ -262,12 +259,12 @@ public class Chat implements Listener {
             if (WHISPER_AND_SHOUT_LEVELS) senderInfo.add("whisper (" + whisperLevel + ")");
 
             // Decrease the chat range
-            chatRange -= (WHISPER_CHAT_RANGE_DECREASE * whisperLevel);
+            chatRange -= WHISPER_CHAT_RANGE_DECREASE * whisperLevel;
 
             // Check if the chat range is smaller than one -> Set the chat range equal to one
             if (chatRange < 1) chatRange = 1;
 
-            // Check if italics when whispering is enabled
+            // Check if "italics when whispering" is enabled
             if (WHISPER_ITALICS) {
 
                 // Check if the amount of parenthesis nests are greater than 0 and the "whisper parenthesises" option is true
@@ -288,32 +285,19 @@ public class Chat implements Listener {
 
                 // Make the message italic on every letter
                 message = makeMessageTypography(message, ChatColor.ITALIC);
-            }
-
-        }
-
-
-        // Check if the supposedly first letter in the message is space
-        if (message.length() > 2) {
-
-            // Check if the message starts with the chat format symbol
-            if (message.startsWith("§")) {
-
-                // Check if the first letter (if the message starts with chat formatting) is space -> Remove the space
-                if (message.charAt(2) == ' ') message = message.replaceFirst(" ", "");
 
             }
 
         }
 
 
-        // Check if the "show sender's chat range" option is true
-        if (SENDER_CHAT_RANGE) {
+        // Check if the message starts with the chat format symbol and the supposedly first letter
+        // in the message is space and the first letter is space... then remove the space
+        if (message.startsWith("§") && message.length() > 2 && message.charAt(2) == ' ') message = message.replaceFirst(" ", "");
 
-            // Add the chat range to the information
-            senderInfo.add("chat range: " + formatNumber(chatRange));
 
-        }
+        // Check if the "show sender's chat range" option is true... then add the chat range to the sender information
+        if (SENDER_CHAT_RANGE) senderInfo.add("chat range: " + formatNumber(chatRange));
 
 
         // The message that is sent (example... Axe_Villager: Hello!)
@@ -395,9 +379,6 @@ public class Chat implements Listener {
         // Build the eventual message result
         final StringBuilder result = new StringBuilder();
 
-        // Count position of the character
-        int i = 0;
-
         // The position of the character to be ignored from being obscure
         int ignore = 0;
 
@@ -405,45 +386,31 @@ public class Chat implements Listener {
         if (playerDistance <= chatRange) {
 
             // The message as a character array
-            char[] messageArray = message.toCharArray();
+            char[] ma = message.toCharArray();
 
             // For every character in the message
-            for (char character : messageArray) {
-
-                // Add one to i for every letter
-                i++;
+            for (int i = 0; i < ma.length; i++) {
 
                 // Random number between 0 and 1
                 final double rnd = Math.random();
 
-                // Check if the character is the chat format symbol '§'
-                if (character == '§') {
+                char c = ma[i];
 
-                    // The character position to ignore  so that chat formatting is never removed
-                    ignore = i;
+                // Check if the character is the chat format symbol '§'... then set the character
+                // position to the ignore value so that chat formatting is never removed
+                if (c == '§') ignore = i + 1;
 
-                }
+                // Check if the random number is smaller or equal to the percentage and
+                // the character is not the chat format symbol '§' so that chat formatting is never removed and
+                // the character is not at the position of the character to be ignored
+                if (rnd <= percentage && c != '§' && c != ma[ignore]) {
 
-                // Check if the random number is smaller or equal to the percentage
-                if (rnd <= percentage) {
-
-                    // Check if the character is not the chat format symbol '§' so that chat formatting is never removed
-                    if (character != '§') {
-
-                        // Check if the character is not at the position of the character to be ignored
-                        if (character != messageArray[ignore]) {
-
-                            // Set the character to space
-                            character = ' ';
-
-                        }
-
-                    }
-
+                    // Set the character to space
+                    c = ' ';
                 }
 
                 // Build the message result by adding every character to the message
-                result.append(character);
+                result.append(c);
 
             }
 
@@ -509,7 +476,7 @@ public class Chat implements Listener {
         if (event.isCancelled()) {
 
             // Notify the console
-            Bukkit.getLogger().info("Ignoring chat event! Cancelled by another plugin: " + event);
+            Bukkit.getLogger().info("Ignoring chat event! - Cancelled by another plugin.");
 
             // Stop
             return;
@@ -526,31 +493,26 @@ public class Chat implements Listener {
 
 
     /**
-     * Create the new chat event
+     * Create a new chat event
      */
     private PlayerChatEvent createNewChatEvent(final Player recipient, final Player sender, final String message, final ArrayList<String> info) {
 
         // The received message
         final String received = String.format(CHAT_FORMAT, sender.getDisplayName(), message);
 
-        // Check if the "message received" option is true
-        if (MESSAGE_RECEIVED) {
+        // Check if the "message received" option is true and the sender is not the recipient
+        if (MESSAGE_RECEIVED && sender != recipient) {
 
-            // Check if the sender is not the recipient
-            if (sender != recipient) {
+            // Check if there is any information
+            if (info.size() > 0) {
 
-                // Check if there is any information
-                if (info.size() > 0) {
+                // Notify the console (when there is info)
+                Bukkit.getConsoleSender().sendMessage("- (" + createTextList(info) + ") " + recipient.getName() + " received; " + makeMessageTypography(received, ChatColor.RESET));
 
-                    // Notify the console (when there is info)
-                    Bukkit.getConsoleSender().sendMessage("- (" + createTextList(info) + ") " + recipient.getName() + " received; " + makeMessageTypography(received, ChatColor.RESET));
+            } else {
 
-                } else {
-
-                    // Notify the console (when there is no info)
-                    Bukkit.getConsoleSender().sendMessage("- " + recipient.getName() + " received; " + makeMessageTypography(received, ChatColor.RESET));
-
-                }
+                // Notify the console (when there is no info)
+                Bukkit.getConsoleSender().sendMessage("- " + recipient.getName() + " received; " + makeMessageTypography(received, ChatColor.RESET));
 
             }
 

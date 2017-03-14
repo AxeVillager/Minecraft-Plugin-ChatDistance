@@ -49,90 +49,17 @@ public class JoinAndDisconnect implements Listener {
     @EventHandler
     public void onJoin(final PlayerJoinEvent event) {
 
-        // The player that joins the server
+        // The player that joined the server
         final Player player = event.getPlayer();
 
         // The player's display name
         final String playerName = player.getDisplayName();
 
-        // Set the original join message to nothing so that it appears to have been canceled
+        // Do the join message
+        joinOrLeaveMessage(player, JOIN_MESSAGE.replace("name", playerName).replace("&", "§"), "join");
+
+        // Set the join message to nothing so that it appears to have been cancelled
         event.setJoinMessage("");
-
-        // The join message
-        final String joinMessage = JOIN_MESSAGE.replace("name", playerName).replace("&", "§");
-
-        // The list of names of players that received the join message
-        final ArrayList<String> recipientsList = new ArrayList<>();
-
-        // For every player on the server
-        for (final Player recipient : Bukkit.getOnlinePlayers()) {
-
-            // The recipient's distance to the player that logged in
-            final double recipientDistance = recipient.getLocation().distance(player.getLocation());
-
-            // Check if the recipient is not the player that joins the server
-            if (recipient != player) {
-
-                // Check if the local join and leave messages option is true
-                if (LOCAL_JOIN_AND_LEAVE_MESSAGES) {
-
-                    // Check if the recipient and the player that logged in are in the same world
-                    if (recipient.getLocation().getWorld() == player.getLocation().getWorld()) {
-
-                        // Check if the recipient's distance to the player that logged in is less or equal to the join and leave message range
-                        if (recipientDistance <= JOIN_AND_LEAVE_MESSAGES_RANGE) {
-
-                            // Check if the "received join/leave message distance" option is true
-                            if (RECEIVED_DISTANCE) {
-
-                                // Add the recipient's name to the recipients list (with distance)
-                                recipientsList.add(recipient.getName() + " (distance: " + formatNumber(recipientDistance) + ")");
-
-                            } else {
-
-                                // Add the recipient's name to the recipients list
-                                recipientsList.add(recipient.getName() + " ");
-
-                            }
-
-                            // Send the join message to the recipient
-                            recipient.sendMessage(joinMessage);
-
-                        }
-
-                    }
-
-                }
-
-                // Otherwise... the local join and leaves messages option is false
-                else {
-
-                    // Send the join message to the recipient
-                    recipient.sendMessage(joinMessage);
-
-                }
-
-            }
-
-        }
-
-        // Notify the console who joined
-        Bukkit.getConsoleSender().sendMessage(makeMessageTypography(joinMessage, ChatColor.RESET));
-
-
-        // Check if the local join and leave messages option is true
-        if (LOCAL_JOIN_AND_LEAVE_MESSAGES) {
-
-            // Check if the "join/leave message receivers" option is true
-            if (LIST_RECEIVERS) {
-
-                // Notify the console who received the join message
-                Bukkit.getConsoleSender().sendMessage("Players that received the join message (" + recipientsList.size() + "): " + createTextList(recipientsList));
-
-            }
-
-        }
-
     }
 
     /**
@@ -147,83 +74,73 @@ public class JoinAndDisconnect implements Listener {
         // The player's display name
         final String playerName = player.getDisplayName();
 
-        // Set the original leave message to nothing so that it appears to have been canceled
+        // Do the leave message
+        joinOrLeaveMessage(player, LEAVE_MESSAGE.replace("name", playerName).replace("&", "§"), "leave");
+
+        // Set the leave message to nothing so that it appears to have been cancelled
         event.setQuitMessage("");
+    }
 
-        // The leave message
-        final String leaveMessage = LEAVE_MESSAGE.replace("name", playerName).replace("&", "§");
 
-        // The list of names of players that received the leave message
+    /**
+     * Broadcasts locally or globally that a player joined or left the server
+     */
+    private void joinOrLeaveMessage(final Player player, final String message, final String type) {
+
+        // The list of names of players that received the join/leave message
         final ArrayList<String> recipientsList = new ArrayList<>();
 
         // For every player on the server
         for (final Player recipient : Bukkit.getOnlinePlayers()) {
 
-            // The recipient's distance to the player that left
+            // The recipient's distance to the player that joined/left
             final double recipientDistance = recipient.getLocation().distance(player.getLocation());
 
-            // Check if the recipient is not the player that left the server
-            if (recipient != player) {
+            // Check if the recipient is not the player that joined/left the server
+            // and the local join and leave messages option is true and the recipient
+            // and the player that joined/left are/were in the same world and the recipient's distance
+            // to the player that joined/left are/were less or equal to the join and leave message range
+            if (recipient != player
+                    && LOCAL_JOIN_AND_LEAVE_MESSAGES
+                    && recipient.getLocation().getWorld() == player.getLocation().getWorld()
+                    && recipientDistance <= JOIN_AND_LEAVE_MESSAGES_RANGE) {
 
-                // Check if the local join and leave messages option is true
-                if (LOCAL_JOIN_AND_LEAVE_MESSAGES) {
+                // Check if the "received join/leave message distance" option is true
+                if (RECEIVED_DISTANCE) {
 
-                    // Check if the recipient and the player that left were in the same world
-                    if (recipient.getLocation().getWorld() == player.getLocation().getWorld()) {
+                    // Add the recipient's name to the recipients list (with distance)
+                    recipientsList.add(recipient.getName() + " (distance: " + formatNumber(recipientDistance) + ")");
 
-                        // Check if the recipient's distance to the player that left were less or equal to the join and leave message range
-                        if (recipientDistance <= JOIN_AND_LEAVE_MESSAGES_RANGE) {
+                } else
 
-                            // Check if the "received join/leave message distance" option is true
-                            if (RECEIVED_DISTANCE) {
+                    // Add the recipient's name to the recipients list
+                    recipientsList.add(recipient.getName() + " ");
 
-                                // Add the recipient's name to the recipients list (with distance)
-                                recipientsList.add(recipient.getName() + " (distance: " + formatNumber(recipientDistance) + ")");
 
-                            } else {
-
-                                // Add the recipient's name to the recipients list
-                                recipientsList.add(recipient.getName() + " ");
-
-                            }
-
-                            // Send the leave message to the recipient
-                            recipient.sendMessage(leaveMessage);
-
-                        }
-
-                    }
-
-                }
-
-                // Otherwise... the local join and leaves messages option is false
-                else {
-
-                    // Send the leave message to the recipient
-                    recipient.sendMessage(leaveMessage);
-
-                }
+                // Send the join/leave message to the recipient
+                recipient.sendMessage(message);
 
             }
 
-        }
+            // Otherwise... the local join and leaves messages option is false
+            else {
 
-        // Notify the console who left
-        Bukkit.getConsoleSender().sendMessage(makeMessageTypography(leaveMessage, ChatColor.RESET));
-
-
-        // Check if the local join and leave messages option is true
-        if (LOCAL_JOIN_AND_LEAVE_MESSAGES) {
-
-            // Check if the "join/leave message receivers" option is true
-            if (LIST_RECEIVERS) {
-
-                // Notify the console who received the join message
-                Bukkit.getConsoleSender().sendMessage("Players that received the leave message (" + recipientsList.size() + "): " + createTextList(recipientsList));
+                // Send the join/leave message to the recipient
+                recipient.sendMessage(message);
 
             }
         }
 
+        // Notify the console who joined/left
+        Bukkit.getConsoleSender().sendMessage(makeMessageTypography(message, ChatColor.RESET));
+
+        // Check if the local join and leave messages option is true and the "join/leave message receivers" option is true
+        if (LOCAL_JOIN_AND_LEAVE_MESSAGES && LIST_RECEIVERS) {
+
+            // Notify the console who received the join/leave message
+            Bukkit.getConsoleSender().sendMessage
+                    ("The players that received the " + type + " message (" + recipientsList.size() + "): " + createTextList(recipientsList));
+
+        }
     }
-
 }
