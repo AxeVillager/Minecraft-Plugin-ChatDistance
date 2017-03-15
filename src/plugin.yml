@@ -3,7 +3,7 @@ version: 1.0
 main: com.baol.chatdistance.Main
 author: Axe_Villager
 website: https://github.com/AxeVillager/Minecraft-Plugin-ChatDistance
-description: A plugin that lets you modify the chat
+description: A plugin that lets you modify the chat and more
 
 permissions:
     chatdistance.*:
