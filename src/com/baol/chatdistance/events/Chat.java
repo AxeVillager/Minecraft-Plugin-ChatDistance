@@ -379,11 +379,11 @@ public class Chat implements Listener {
         // Build the eventual message result
         final StringBuilder result = new StringBuilder();
 
-        // The position of the character to be ignored from being obscure
-        int ignore = 0;
-
         // Check if the player's distance is smaller or equal to the max chat range
         if (playerDistance <= chatRange) {
+
+            // The position of the character to be ignored from being obscure
+            int ignore = 0;
 
             // The message as a character array
             char[] ma = message.toCharArray();
@@ -426,7 +426,7 @@ public class Chat implements Listener {
      */
     private void globalMessage(final Player sender, String message) {
 
-        // Doesn't work properly with /g for example, because it doesn't go through a chat event
+        // Doesn't work properly (as command) with '/' as prefix, because it doesn't go through a chat event
 
         // Check if the message starts with a space
         if (message.startsWith(" ")) {
