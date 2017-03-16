@@ -443,7 +443,7 @@ public class Chat implements Listener {
 
 
     /**
-     * Call chat event
+     * Call the chat event
      */
     private void chatEvent(final PlayerChatEvent event) {
 

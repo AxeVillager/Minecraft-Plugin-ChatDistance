@@ -1,0 +1,380 @@
+# +------------------------------------------------------+
+# |                                                      |
+# |  The configuration file of the ChatDistance plugin   |
+# |                                                      |
+# |                                                      |
+# |  - Author: Axe_Villager                              |
+# |  - Version: 1.1                                      |
+# |  - Last updated on: 2017/03/16                       |
+# |  - Tested on: Java: 8, Minecraft: 1.11.2             |
+# |                                                      |
+# +------------------------------------------------------+
+
+#            If you receive an error when the
+#            plugin loads, ensure that:
+
+#              - No tabs are used:
+#                  YAML allows only spaces
+
+#              - Indents are correct:
+#                  YAML hierarchy is
+#                  based on indentation
+
+# +------------------------------------------------------+
+
+#            If you input a false value in any
+#            of the options, the plugin will
+#            default to using the respective
+#            default value for said option.
+
+# +------------------------------------------------------+
+
+#            Do you have any issues or encounter
+#            any bugs? Please contact the author
+#            of the plugin at:
+
+#       https://dev.bukkit.org/projects/chat-distance
+
+# +------------------------------------------------------+
+# |                                                      |
+# |                  Table of contents                   |
+# |                                                      |
+# |    b)   Permissions                                  |
+# |    c)   Colour & Formatting Codes                    |
+# |         -------------------------                    |
+# |    d)   Chat Messages                                |
+# |    e)   Join & Leave Messages                        |
+# |    f)   Death Messages                               |
+# |    g)   Console                                      |
+# |                                                      |
+# +------------------------------------------------------+
+# +------------------------------------------------------+
+# |                                                      |
+# |                     Permissions                      |
+# |                                                      |
+# |   chatdistance.*                                     |
+# |      Access to everything below                      |
+# |      default: op                                     |
+# |                                                      |
+# |   chatdistance.whisper                               |
+# |      Allows you to whisper chat messages             |
+# |      default: true                                   |
+# |                                                      |
+# |   chatdistance.shout                                 |
+# |      Allows you to shout chat messages               |
+# |      default: true                                   |
+# |                                                      |
+# |   chatdistance.global                                |
+# |      Allows you to send global chat messages         |
+# |      default: op                                     |
+# |                                                      |
+# |   chatdistance.formatting                            |
+# |      Allows you to use colour and formatting         |
+# |      codes in chat messages                          |
+# |      default: op                                     |
+# |                                                      |
+# +------------------------------------------------------+
+# +------------------------------------------------------+
+# |                                                      |
+# |              Colour & Formatting Codes               |
+# |                                                      |
+# |                                                      |
+# |   &0  =  Black                                       |
+# |   &1  =  Dark Blue                                   |
+# |   &2  =  Dark Green                                  |
+# |   &3  =  Dark Aqua                                   |
+# |   &4  =  Dark Red                                    |
+# |   &5  =  Dark Purple                                 |
+# |   &6  =  Gold                                        |
+# |   &7  =  Gray                                        |
+# |   &8  =  Dark Gray                                   |
+# |   &9  =  Blue                                        |
+# |   &a  =  Green                                       |
+# |   &b  =  Aqua                                        |
+# |   &c  =  Red                                         |
+# |   &d  =  Light Purple                                |
+# |   &e  =  Yellow                                      |
+# |   &f  =  White                                       |
+# |                                                      |
+# |   &k  =  Obfuscated                                  |
+# |   &l  =  Bold                                        |
+# |   &m  =  Strikethrough                               |
+# |   &n  =  Underline                                   |
+# |   &o  =  Italic                                      |
+# |   &r  =  Reset                                       |
+# |                                                      |
+# +------------------------------------------------------+
+
+
+# +------------------------------------------------------+
+# |                    Chat Messages                     |
+# +------------------------------------------------------+
+
+
+# The chat format that will be present whenever a player
+# sends a chat message. All colour and formatting codes
+# are available. Use 'name' to display the player's name
+# and 'message' to display the player's chat message.
+
+chat format: "&fname&7: message"
+
+
+
+# The text that has to be used in the beginning of the
+# chat message in order to make the message global. It
+# is possible to use '/' in front of the global prefix,
+# however the message will no longer be accessible for
+# other plugins that interfere with chat messages.
+
+global prefix: "global:"
+
+
+
+# The chat format that will be present whenever a player
+# sends a global chat message. All colour and formatting
+# codes are available. Use 'name' to display the player's
+# name and 'message' to display the player's chat message
+# after the global prefix.
+
+global chat format: "&fname &e(global)&7: message"
+
+
+
+# The divisor that is used to calculate the obscure chat
+# range. The higher the number, the smaller the obscure
+# chat range and larger the clear chat range.
+
+obscure chat range divisor: 2.5
+
+
+
+# The number that is amplified with the original percentage
+# of obscurity of the chat message. If the percentage
+# amplifier is equal to one then the percentage is not
+# changed. The higher the number is the more readable
+# obscure messages will be.
+
+percentage amplifier: 1.75
+
+
+
+# The distance, in blocks, the default chat messages travel
+# before completely disappearing.
+
+chat range: 50
+
+
+
+# Use parenthesis nests around the chat message to whisper.
+# Example: (whispering)
+
+whisper with parenthesises: true
+
+
+
+# Define your own symbol for whispering (must be one
+# character). The default symbol is tilde (~). Use the
+# symbol in front of the chat message to whisper.
+# Example: ~whispering
+
+whisper symbol: '~'
+
+
+
+# Use the own defined symbol (above) for whispering.
+
+whisper with symbol: true
+
+
+
+# Show whispering in italic text. This will also remove
+# the tildes or parenthesises that were used to perform
+# the whispering from the chat message.
+
+whisper italic: true
+
+
+
+# The amount the chat range is decreased when whispering.
+# The amount is multiplied with the whisper level. The
+# chat range does not go lower than 1.
+
+whisper chat range decrease: 25
+
+
+
+# The max whispering level. The whispering levels are
+# indicated by the amount of parenthesis nests around
+# the message or tildes (~) in front of the message.
+
+whisper max level: 2
+
+
+
+# Show shouting in bold text.
+
+shout bold: true
+
+
+
+# The amount of exclamation marks in the chat message
+# indicates the shouting level. By setting this option
+# to true - only exclamation marks at the end of the
+# chat message will affect the shouting level.
+
+exclamation marks at the end: false
+
+
+
+# The amount of hunger lost when shouting. The amount
+# is multiplied with the shouting level.
+
+shout hunger loss: 2
+
+
+
+# The amount the chat range is increased when shouting.
+# The amount is multiplied with the shouting level.
+
+shout chat range increase: 30
+
+
+
+# The max shouting level. The shouting levels are
+# indicated by the amount of exclamation marks in or
+# at the end of the message.
+
+shout max level: 4
+
+
+
+# The error message the player receives when his/her
+# food level is too low to shout.
+
+too low food level to shout: "&cYour food level is too low to shout!"
+
+
+
+
+# +------------------------------------------------------+
+# |                 Join & Leave Messages                |
+# +------------------------------------------------------+
+
+
+# Use local join and leave messages.
+
+local join/leave messages: true
+
+
+
+# The distance, in blocks, the join and leave
+# messages travel before disappearing.
+
+join/leave message range: 250
+
+
+
+# The join message. Leave blank if you
+# wish to use the default join message.
+
+join message: "&7&oname joined the game..."
+
+
+
+# The leave message. Leave blank if you
+# wish to use the default leave message.
+
+leave message: "&7&oname left the game..."
+
+
+
+
+# +------------------------------------------------------+
+# |                    Death Messages                    |
+# +------------------------------------------------------+
+
+
+# Use local death messages.
+
+local death messages: true
+
+
+
+# The distance, in blocks, the death
+# messages travel before disappearing.
+
+death messages range: 250
+
+
+
+# The colour of the death messages.
+
+death messages colour: "GRAY"
+
+
+
+# The typography of the death messages. The different
+# typography options are as following:
+#   - MAGIC, BOLD, STRIKETHROUGH, UNDERLINE, ITALIC, RESET
+
+death messages typography: "ITALIC"
+
+
+
+
+# +------------------------------------------------------+
+# |                       Console                        |
+# +------------------------------------------------------+
+
+
+# Show the chat range of the chat message that was sent.
+
+sender chat range: true
+
+
+
+# Show that the chat message is a shout or whisper
+# and what shout or whisper level it is.
+
+whisper and shout levels: true
+
+
+
+# Show the chat message every receiver
+# received from the sender.
+
+message received: true
+
+
+
+# Show the receivers' distance to
+# the sender of the chat message.
+
+receiver distance: true
+
+
+
+# Show a list of players that received the death message.
+
+death message receivers: true
+
+
+
+# Show the receiver of the death message's
+# distance to the player that died.
+
+received death message distance: true
+
+
+
+# Show a list of players that received
+# the join or leave message.
+
+join/leave message receivers: true
+
+
+
+# Show the receiver of the join or leave message's
+# distance to the player that joined or left the server.
+
+received join/leave message distance: true
