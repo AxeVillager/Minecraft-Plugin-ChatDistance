@@ -32,22 +32,11 @@ public class Utilities {
      */
     public static String formatNumber(final double d) {
 
-        // A new decimal format so we can format the recipient's distance neatly with only one decimal number
         final DecimalFormat df = new DecimalFormat("#.#");
-
-        // Set grouping to 3 (ex. 1,074)
         df.setGroupingSize(3);
-
-        // Turn on grouping
         df.setGroupingUsed(true);
-
-        // Round the number to the ceiling
         df.setRoundingMode(RoundingMode.CEILING);
-
-        // Use the English decimal format symbols
         df.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.ENGLISH));
-
-        // Return the formatted number
         return df.format(d);
 
     }
@@ -62,6 +51,7 @@ public class Utilities {
         sm.append(cc);
         // The position of the character to be ignored (the char after §)
         int i = 0;
+        
         for (int j = 0; j < m.length(); j++) {
             if (m.charAt(j) == '§') {
                 i = j + 1;
@@ -112,7 +102,7 @@ public class Utilities {
 
 
     /**
-     * Counts the amount of exclamation marks in the end of a sentence
+     * Counts the amount of a specific character at the end of a string
      */
     public static int countCharEnd(final String s, final char c) {
 
@@ -130,7 +120,7 @@ public class Utilities {
 
 
     /**
-     * Counts the amount of whisper symbols in the beginning of the message
+     * Counts the amount of a specific character in the message
      */
     public static int countChar(final String s, final char c) {
 
@@ -143,7 +133,7 @@ public class Utilities {
 
 
     /**
-     * Return the amount of whispering symbols in the string.
+     * Return the amount of whispering symbols in the string
      */
     public static int countWhisperSymbols(final String s, final String sym, final boolean bPar, final boolean bSym) {
 
@@ -166,7 +156,7 @@ public class Utilities {
 
 
     /**
-     * Return a string that has been stripped from its whisper symbols.
+     * Return a string that has been stripped from its whisper symbols
      */
     public static String stripMessage(final String s, final String sym, final int i, final boolean bPar, final boolean bSym) {
 
