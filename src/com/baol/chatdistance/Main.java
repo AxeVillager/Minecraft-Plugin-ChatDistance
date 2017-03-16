@@ -8,7 +8,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- * Main created by Børre A. Opedal Lunde on 2017/03/10
+ * Main created by AxeVillager on 2017/03/10
  */
 
 public class Main extends JavaPlugin {
