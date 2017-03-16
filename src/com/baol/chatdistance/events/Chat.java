@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import static com.baol.chatdistance.other.Utilities.*;
 
 /**
- * Chat created by Børre A. Opedal Lunde on 2017/03/10
+ * Chat created by AxeVillager on 2017/03/10
  */
 
 @SuppressWarnings("deprecation")
