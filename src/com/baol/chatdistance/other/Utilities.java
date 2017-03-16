@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 /**
- * Utilities created by Børre A. Opedal Lunde on 2017/03/12
+ * Utilities created by AxeVillager on 2017/03/12
  */
 
 public class Utilities {
