@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import static com.baol.chatdistance.other.Utilities.*;
 
 /**
- * JoinAndDisconnect created by Børre A. Opedal Lunde on 2017/03/12
+ * JoinAndDisconnect created by AxeVillager on 2017/03/12
  */
 
 public class JoinAndDisconnect implements Listener {
