@@ -4,8 +4,8 @@
 # |                                                      |
 # |                                                      |
 # |  - Author: Axe_Villager                              |
-# |  - Version: 1.0                                      |
-# |  - Last updated on: 2017/03/15                       |
+# |  - Version: 1.1                                      |
+# |  - Last updated on: 2017/03/16                       |
 # |  - Tested on: Java: 8, Minecraft: 1.11.2             |
 # |                                                      |
 # +------------------------------------------------------+
@@ -33,7 +33,7 @@
 #            any bugs? Please contact the author
 #            of the plugin at:
 
-#     https://bukkit.org/members/axe_villager.90731074/
+#       https://dev.bukkit.org/projects/chat-distance
 
 # +------------------------------------------------------+
 # |                                                      |
@@ -168,14 +168,22 @@ chat range: 50
 # Use parenthesis nests around the chat message to whisper.
 # Example: (whispering)
 
-whisper with parenthesis: true
+whisper with parenthesises: true
 
 
 
-# Use tilde (~) in the beginning of the chat message to
-# whisper. Example: ~whispering
+# Define your own symbol for whispering (must be one
+# character). The default symbol is tilde (~). Use the
+# symbol in front of the chat message to whisper.
+# Example: ~whispering
 
-whisper with tilde: true
+whisper symbol: '~'
+
+
+
+# Use the own defined symbol (above) for whispering.
+
+whisper with symbol: true
 
 
 
@@ -209,6 +217,15 @@ shout bold: true
 
 
 
+# The amount of exclamation marks in the chat message
+# indicates the shouting level. By setting this option
+# to true - only exclamation marks at the end of the
+# chat message will affect the shouting level.
+
+exclamation marks at the end: false
+
+
+
 # The amount of hunger lost when shouting. The amount
 # is multiplied with the shouting level.
 
@@ -224,8 +241,8 @@ shout chat range increase: 30
 
 
 # The max shouting level. The shouting levels are
-# indicated by the amount of exclamation marks at the end
-# of the message.
+# indicated by the amount of exclamation marks in or
+# at the end of the message.
 
 shout max level: 4
 

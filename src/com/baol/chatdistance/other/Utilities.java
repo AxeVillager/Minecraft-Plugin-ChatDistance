@@ -114,12 +114,12 @@ public class Utilities {
     /**
      * Counts the amount of exclamation marks in the end of a sentence
      */
-    public static int countExclamationMarks(final String m) {
+    public static int countCharEnd(final String s, final char c) {
 
         int i = 0;
-        for (int j = 0; j < m.length(); j++) {
-            int k = m.length() - (j + 1);
-            if (m.charAt(k) == '!' && m.length() > 1) {
+        for (int j = 0; j < s.length(); j++) {
+            int k = s.length() - (j + 1);
+            if (s.charAt(k) == c && s.length() > 1) {
                 i++;
             } else {
                 return i;
@@ -132,35 +132,54 @@ public class Utilities {
     /**
      * Counts the amount of whisper symbols in the beginning of the message
      */
-    public static int countCharacter(final String m, final char c) {
+    public static int countChar(final String s, final char c) {
 
         int i = 0;
-        for (int j = 0; j < m.length(); j++) {
-            if (m.charAt(j) == c && m.length() > 1 + j) {
+        for (final char ch : s.toCharArray())
+            if (ch == c)
                 i++;
-            } else {
-                return i;
-            }
-        }
         return i;
     }
 
 
     /**
-     * Counts the amount of parenthesis nests around the message
+     * Return the amount of whispering symbols in the string.
      */
-    public static int countParenthesisNests(final String m) {
+    public static int countWhisperSymbols(final String s, final String sym, final boolean bPar, final boolean bSym) {
 
-        int i = 0;
-        for (int j = 0; j < m.length(); j++) {
-            int k = m.length() - (j + 1);
-            if (m.charAt(j) == '(' && m.charAt(k) == ')' && m.length() > 2 + (j << 1)) {
-                i++;
+        final char c = sym.charAt(0);
+        int countPar = 0;
+        int countSym = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            int j = s.length() - (i - countSym + 1);
+            if (s.charAt(i) == '(' && s.charAt(j) == ')' && bPar) {
+                countPar++;
+            } else if (s.charAt(i) == c && bSym) {
+                countSym++;
             } else {
-                return i;
+                return countPar + countSym;
             }
         }
-        return i;
+        return countPar + countSym;
     }
 
+
+    /**
+     * Return a string that has been stripped from its whisper symbols.
+     */
+    public static String stripMessage(final String s, final String sym, final int i, final boolean bPar, final boolean bSym) {
+
+        final char c = sym.charAt(0);
+        final StringBuilder sb = new StringBuilder();
+        int k = i;
+
+        for (int j = 0; j < s.length(); j++) {
+            if (s.charAt(j) == c && bSym) k--;
+            if (!((j < i  && (s.charAt(j) == '(' || s.charAt(j) == c)) || (j > (s.length() - k - 1) && s.charAt(j) == ')' && bPar))) {
+                sb.append(s.charAt(j));
+            }
+        }
+        return new String (sb);
+    }
 }

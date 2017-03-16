@@ -96,39 +96,39 @@ public class JoinAndDisconnect implements Listener {
             // The recipient's distance to the player that joined/left
             final double recipientDistance = recipient.getLocation().distance(player.getLocation());
 
-            // Check if the recipient is not the player that joined/left the server
-            // and the local join and leave messages option is true and the recipient
-            // and the player that joined/left are/were in the same world and the recipient's distance
-            // to the player that joined/left are/were less or equal to the join and leave message range
-            if (recipient != player
-                    && LOCAL_JOIN_AND_LEAVE_MESSAGES
-                    && recipient.getLocation().getWorld() == player.getLocation().getWorld()
-                    && recipientDistance <= JOIN_AND_LEAVE_MESSAGES_RANGE) {
+            // Check if the recipient is not the player
+            if (recipient != player) {
 
-                // Check if the "received join/leave message distance" option is true
-                if (RECEIVED_DISTANCE) {
+                // Check if the local join and leave messages are on
+                if (LOCAL_JOIN_AND_LEAVE_MESSAGES) {
 
-                    // Add the recipient's name to the recipients list (with distance)
-                    recipientsList.add(recipient.getName() + " (distance: " + formatNumber(recipientDistance) + ")");
+                    // Check if the recipient is inside the range
+                    if (recipient.getLocation().getWorld() == player.getLocation().getWorld()
+                            && recipientDistance <= JOIN_AND_LEAVE_MESSAGES_RANGE) {
 
-                } else
-
-                    // Add the recipient's name to the recipients list
-                    recipientsList.add(recipient.getName() + " ");
+                        // Add the recipient to the recipients list with distance information if the receive distance option is true
+                        // otherwise send only the recipient's name
+                        recipientsList.add(RECEIVED_DISTANCE ? recipient.getName() + " (distance: " + formatNumber(recipientDistance) + ")"
+                                : recipient.getName() + " ");
 
 
-                // Send the join/leave message to the recipient
-                recipient.sendMessage(message);
+                        // Send the join/leave message to the recipient
+                        recipient.sendMessage(message);
+
+                    }
+
+                }
+
+                // Otherwise... the local join and leaves messages option is false
+                else {
+
+                    // Send the join/leave message to the recipient
+                    recipient.sendMessage(message);
+
+                }
 
             }
 
-            // Otherwise... the local join and leaves messages option is false
-            else {
-
-                // Send the join/leave message to the recipient
-                recipient.sendMessage(message);
-
-            }
         }
 
         // Notify the console who joined/left
@@ -138,8 +138,7 @@ public class JoinAndDisconnect implements Listener {
         if (LOCAL_JOIN_AND_LEAVE_MESSAGES && LIST_RECEIVERS) {
 
             // Notify the console who received the join/leave message
-            Bukkit.getConsoleSender().sendMessage
-                    ("The players that received the " + type + " message (" + recipientsList.size() + "): " + createTextList(recipientsList));
+            Bukkit.getConsoleSender().sendMessage("The players that received the " + type + " message (" + recipientsList.size() + "): " + createTextList(recipientsList));
 
         }
     }

@@ -25,13 +25,15 @@ public class Chat implements Listener {
     private final String CHAT_FORMAT;
     private final double OBSCURE_CHAT_RANGE_DIVISOR;
     private final double PERCENTAGE_AMPLIFIER;
-    private final boolean WHISPER_PARENTHESISES;
-    private final boolean WHISPER_TILDE;
+    private final boolean USE_WHISPER_PARENTHESISES;
+    private final String WHISPER_SYMBOL;
+    private final boolean USE_WHISPER_SYMBOL;
     private final boolean WHISPER_ITALICS;
     private final double WHISPER_CHAT_RANGE_DECREASE;
     private final int MAX_WHISPER_LEVEL;
     private final double TALK_CHAT_RANGE;
     private final boolean SHOUT_BOLD;
+    private final boolean SHOUT_ONLY_AT_END;
     private final int SHOUT_HUNGER_LOSS;
     private final String SHOUT_TOO_LOW_HUNGER_MESSAGE;
     private final double SHOUT_RANGE_INCREASE;
@@ -62,10 +64,13 @@ public class Chat implements Listener {
         PERCENTAGE_AMPLIFIER = config.getDouble("percentage amplifier", 1.75);
 
         // The "use parenthesises" to whisper value in the config
-        WHISPER_PARENTHESISES = config.getBoolean("whisper with parenthesises", true);
+        USE_WHISPER_PARENTHESISES = config.getBoolean("whisper with parenthesises", true);
+
+        // The own defined whisper symbol, default '~'
+        WHISPER_SYMBOL = config.getString("whisper symbol", "~");
 
         // The "use tilde" to whisper value in the config
-        WHISPER_TILDE = config.getBoolean("whisper with tilde", true);
+        USE_WHISPER_SYMBOL = config.getBoolean("whisper with symbol", true);
 
         // The italics whisper value from the config
         WHISPER_ITALICS = config.getBoolean("whisper italic", true);
@@ -81,6 +86,9 @@ public class Chat implements Listener {
 
         // The bold shout value from the config
         SHOUT_BOLD = config.getBoolean("shout bold", true);
+
+        // The value that indicates whether exclamations in or at the end of the message counts.
+        SHOUT_ONLY_AT_END = plugin.getConfig().getBoolean("exclamation marks at the end", false);
 
         // The shout hunger loss from the config
         SHOUT_HUNGER_LOSS = config.getInt("shout hunger loss", 2);
@@ -180,24 +188,21 @@ public class Chat implements Listener {
         // The talk range
         double chatRange = TALK_CHAT_RANGE;
 
-        // The amount of exclamation marks the message ends with
-        int exclamationMarks = countExclamationMarks(message);
-
         // Set the exclamation marks value equal to the max value if exceeded
-        exclamationMarks = Math.min(exclamationMarks, MAX_SHOUT_LEVEL);
+        final int shoutLevel = Math.min(SHOUT_ONLY_AT_END ? countCharEnd(message, '!') : countChar(message, '!'), MAX_SHOUT_LEVEL);
 
 
         // Check if the amount of exclamation marks are greater than zero and the sender has permission to shout
-        if (exclamationMarks > 0 && sender.hasPermission("chatdistance.shout")) {
+        if (shoutLevel > 0 && sender.hasPermission("chatdistance.shout")) {
 
             // Check if the "show whisper and shout levels" option is true -> add shout level to the sender's information
-            if (WHISPER_AND_SHOUT_LEVELS) senderInfo.add("shout (" + exclamationMarks + ")");
+            if (WHISPER_AND_SHOUT_LEVELS) senderInfo.add("shout (" + shoutLevel + ")");
 
             // Check if the sender is in survival or adventure mode
             if (sender.getGameMode() == GameMode.SURVIVAL || sender.getGameMode() == GameMode.ADVENTURE) {
 
                 // The hunger loss
-                int hungerLoss = SHOUT_HUNGER_LOSS * exclamationMarks;
+                int hungerLoss = SHOUT_HUNGER_LOSS * shoutLevel;
 
                 // The sender's food level
                 int senderHunger = sender.getFoodLevel();
@@ -217,13 +222,13 @@ public class Chat implements Listener {
                 }
 
                 // Set the hunger level of the player equal to the respective loss
-                sender.setFoodLevel(sender.getFoodLevel() - (SHOUT_HUNGER_LOSS * exclamationMarks));
+                sender.setFoodLevel(sender.getFoodLevel() - (SHOUT_HUNGER_LOSS * shoutLevel));
 
             }
 
 
             // Increase the speaking range based on the power of the shout
-            chatRange += (SHOUT_RANGE_INCREASE * exclamationMarks);
+            chatRange += (SHOUT_RANGE_INCREASE * shoutLevel);
 
             // Check if the bold chat when shouting is enabled
             if (SHOUT_BOLD)
@@ -233,27 +238,12 @@ public class Chat implements Listener {
 
         }
 
-
-        // The amount of parenthesis nests around the message
-        int parenthesisNests = countParenthesisNests(message);
-
-        // Set the parenthesis nests value equal to the max value if exceeded
-        parenthesisNests = Math.min(parenthesisNests, MAX_WHISPER_LEVEL);
-
-
-        // The amount of whisper symbols in the beginning of the message
-        int whisperSymbols = countCharacter(message, '~');
-
         // Set the whisper symbols value equal to the max value if exceeded
-        whisperSymbols = Math.min(whisperSymbols, MAX_WHISPER_LEVEL);
+        final int whisperLevel = Math.min(countWhisperSymbols(message, WHISPER_SYMBOL, USE_WHISPER_PARENTHESISES, USE_WHISPER_SYMBOL), MAX_WHISPER_LEVEL);
 
 
-        // Check if the parenthesis nests are greater than zero and parenthesis is turned on OR whisper symbols are greater than zero and whisper symbols is turned on AND sender has permission to whisper
-        if (((parenthesisNests > 0 && WHISPER_PARENTHESISES) || (whisperSymbols > 0
-                && WHISPER_TILDE)) && sender.hasPermission("chatdistance.whisper")) {
-
-            // The whisper level
-            final int whisperLevel = parenthesisNests + whisperSymbols;
+        // Check if the message is a whispering message and the sender has permission to whisper
+        if (whisperLevel > 0 && sender.hasPermission("chatdistance.whisper")) {
 
             // Check if the "show whisper and shout levels" option is true -> Add whisper level to the information
             if (WHISPER_AND_SHOUT_LEVELS) senderInfo.add("whisper (" + whisperLevel + ")");
@@ -267,27 +257,20 @@ public class Chat implements Listener {
             // Check if "italics when whispering" is enabled
             if (WHISPER_ITALICS) {
 
-                // Check if the amount of parenthesis nests are greater than 0 and the "whisper parenthesises" option is true
-                if (parenthesisNests > 0 && WHISPER_PARENTHESISES) {
+                // Make the message italic on every letter and remove the whispering symbols
+                message = makeMessageTypography(stripMessage(message, WHISPER_SYMBOL, whisperLevel, USE_WHISPER_PARENTHESISES, USE_WHISPER_SYMBOL), ChatColor.ITALIC);
 
-                    // Remove the parenthesises surrounding the message
-                    message = message.substring(parenthesisNests, message.length() - parenthesisNests);
+                // Check if the length of the message is less or equal to two (nothing but chat format)
+                if (message.length() <= 2) {
 
-                }
+                    // Cancel the chat event
+                    event.setCancelled(true);
 
-                // Otherwise... check if the amount of whisper symbols (~) are greater than 0 and the "whisper tilde" option is true
-                else if (whisperSymbols > 0 && WHISPER_TILDE) {
-
-                    // Remove the whisper symbols in the beginning of the message
-                    message = message.substring(whisperSymbols);
+                    // Stop
+                    return;
 
                 }
-
-                // Make the message italic on every letter
-                message = makeMessageTypography(message, ChatColor.ITALIC);
-
             }
-
         }
 
 
@@ -303,19 +286,11 @@ public class Chat implements Listener {
         // The message that is sent (example... Axe_Villager: Hello!)
         final String sentMessage = String.format(CHAT_FORMAT, sender.getDisplayName(), message);
 
-        // Check if there is any information to show
-        if (senderInfo.size() > 0) {
 
-            // Give information to the console who sends the message and what the message is
-            Bukkit.getConsoleSender().sendMessage("(" + createTextList(senderInfo) + ") " + makeMessageTypography(sentMessage, ChatColor.RESET));
+        // Give information to the console who sends the message and what the message is (if enabled)
+        Bukkit.getConsoleSender().sendMessage(senderInfo.size() > 0 ? "(" + createTextList(senderInfo) + ") " + makeMessageTypography(sentMessage, ChatColor.RESET)
+                : makeMessageTypography(sentMessage, ChatColor.RESET));
 
-
-        } else {
-
-            // Give information to the console who sends the message and what the message is (no sender info)
-            Bukkit.getConsoleSender().sendMessage(makeMessageTypography(sentMessage, ChatColor.RESET));
-
-        }
 
 
         // For every recipient in the chat event
@@ -503,18 +478,9 @@ public class Chat implements Listener {
         // Check if the "message received" option is true and the sender is not the recipient
         if (MESSAGE_RECEIVED && sender != recipient) {
 
-            // Check if there is any information
-            if (info.size() > 0) {
-
-                // Notify the console (when there is info)
-                Bukkit.getConsoleSender().sendMessage("- (" + createTextList(info) + ") " + recipient.getName() + " received; " + makeMessageTypography(received, ChatColor.RESET));
-
-            } else {
-
-                // Notify the console (when there is no info)
-                Bukkit.getConsoleSender().sendMessage("- " + recipient.getName() + " received; " + makeMessageTypography(received, ChatColor.RESET));
-
-            }
+                // Notify the console with information of who is the receiver and such (if enabled)
+                Bukkit.getConsoleSender().sendMessage(info.size() > 0 ? "- (" + createTextList(info) + ") " + recipient.getName() + " received; " + makeMessageTypography(received, ChatColor.RESET)
+                        : "- " + recipient.getName() + " received; " + makeMessageTypography(received, ChatColor.RESET));
 
         }
 
@@ -561,5 +527,4 @@ public class Chat implements Listener {
         }
 
     }
-
 }
