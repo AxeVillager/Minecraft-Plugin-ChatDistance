@@ -2,13 +2,22 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="ChatDistance" />
+      <artifact name="ChatDistance v1.2.1" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="03757995-2314-4d49-a760-2b96a43dfc70" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/artifacts/ChatDistance.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Minecraft Plugin ChatDistance/com/baol/chatdistance/Main.class" afterPath="$PROJECT_DIR$/out/production/Minecraft Plugin ChatDistance/com/baol/chatdistance/Main.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Minecraft Plugin ChatDistance/com/baol/chatdistance/events/Chat.class" afterPath="$PROJECT_DIR$/out/production/Minecraft Plugin ChatDistance/com/baol/chatdistance/events/Chat.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Minecraft Plugin ChatDistance/com/baol/chatdistance/events/Death.class" afterPath="$PROJECT_DIR$/out/production/Minecraft Plugin ChatDistance/com/baol/chatdistance/events/Death.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Minecraft Plugin ChatDistance/com/baol/chatdistance/events/JoinAndDisconnect.class" afterPath="$PROJECT_DIR$/out/production/Minecraft Plugin ChatDistance/com/baol/chatdistance/events/JoinAndDisconnect.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Minecraft Plugin ChatDistance/com/baol/chatdistance/other/Utilities.class" afterPath="$PROJECT_DIR$/out/production/Minecraft Plugin ChatDistance/com/baol/chatdistance/other/Utilities.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/baol/chatdistance/other/Utilities.java" afterPath="$PROJECT_DIR$/src/com/baol/chatdistance/other/Utilities.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Minecraft Plugin ChatDistance/config.yml" afterPath="$PROJECT_DIR$/out/production/Minecraft Plugin ChatDistance/config.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Minecraft Plugin ChatDistance/plugin.yml" afterPath="$PROJECT_DIR$/out/production/Minecraft Plugin ChatDistance/plugin.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/config.yml" afterPath="$PROJECT_DIR$/src/config.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/plugin.yml" afterPath="$PROJECT_DIR$/src/plugin.yml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,9 +36,12 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/baol/chatdistance/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="13" column="38" lean-forward="false" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
-              <folding />
+            <state relative-caret-position="285">
+              <caret line="32" column="5" lean-forward="false" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
+              <folding>
+                <element signature="method#onEnable#0;class#Main#0" expanded="false" />
+                <element signature="method#onDisable#0;class#Main#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -37,27 +49,38 @@
       <file leaf-file-name="Chat.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/baol/chatdistance/events/Chat.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2580">
-              <caret line="172" column="0" lean-forward="false" selection-start-line="172" selection-start-column="0" selection-end-line="172" selection-end-column="0" />
+            <state relative-caret-position="525">
+              <caret line="50" column="0" lean-forward="false" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#Chat#0;class#Chat#0" expanded="false" />
+                <element signature="method#onPlayerChat#0;class#Chat#0" expanded="false" />
                 <element signature="method#obscureMessage#0;class#Chat#0" expanded="false" />
                 <element signature="method#globalMessage#0;class#Chat#0" expanded="false" />
-                <element signature="method#onPlayerCommandPreprocess#0;class#Chat#0" expanded="false" />
+                <element signature="method#specificMessage#0;class#Chat#0" expanded="false" />
+                <element signature="method#chatEvent#0;class#Chat#0" expanded="false" />
+                <element signature="method#createNewAsyncPlayerChatEvent#0;class#Chat#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Utilities.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Utilities.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/baol/chatdistance/other/Utilities.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="7" lean-forward="true" selection-start-line="19" selection-start-column="7" selection-end-line="19" selection-end-column="7" />
+            <state relative-caret-position="1080">
+              <caret line="139" column="7" lean-forward="false" selection-start-line="139" selection-start-column="7" selection-end-line="139" selection-end-column="7" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#createTextList#0;class#Utilities#0" expanded="false" />
                 <element signature="method#formatNumber#0;class#Utilities#0" expanded="false" />
+                <element signature="method#makeMessageTypography#0;class#Utilities#0" expanded="false" />
+                <element signature="method#getChatColor#0;class#Utilities#0" expanded="false" />
+                <element signature="method#chatCodeFormat#0;class#Utilities#0" expanded="false" />
+                <element signature="method#countCharEnd#0;class#Utilities#0" expanded="false" />
+                <element signature="method#countChar#0;class#Utilities#0" expanded="false" />
+                <element signature="method#countWhisperSymbols#0;class#Utilities#0" expanded="false" />
+                <element signature="method#stripMessage#0;class#Utilities#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -66,9 +89,12 @@
       <file leaf-file-name="Death.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/baol/chatdistance/events/Death.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="33" column="60" lean-forward="false" selection-start-line="33" selection-start-column="60" selection-end-line="33" selection-end-column="60" />
-              <folding />
+            <state relative-caret-position="285">
+              <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+              <folding>
+                <element signature="method#Death#0;class#Death#0" expanded="false" />
+                <element signature="method#onDeath#0;class#Death#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -76,18 +102,21 @@
       <file leaf-file-name="JoinAndDisconnect.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/baol/chatdistance/events/JoinAndDisconnect.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="675">
-              <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="750">
+              <caret line="62" column="30" lean-forward="false" selection-start-line="62" selection-start-column="30" selection-end-line="62" selection-end-column="30" />
+              <folding>
+                <element signature="method#onQuit#0;class#JoinAndDisconnect#0" expanded="false" />
+                <element signature="method#joinOrLeaveMessage#0;class#JoinAndDisconnect#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.yml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="config.yml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/config.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="41" lean-forward="false" selection-start-line="7" selection-start-column="41" selection-end-line="7" selection-end-column="41" />
+            <state relative-caret-position="90">
+              <caret line="6" column="21" lean-forward="false" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -97,7 +126,7 @@
         <entry file="file://$PROJECT_DIR$/src/plugin.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="15">
-              <caret line="1" column="12" lean-forward="false" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
+              <caret line="1" column="14" lean-forward="false" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -140,12 +169,12 @@
         <option value="$PROJECT_DIR$/src/chatdistance/events/Chat.java" />
         <option value="$PROJECT_DIR$/src/com/baol/chatdistance/other/Other.java" />
         <option value="$PROJECT_DIR$/src/com/baol/chatdistance/Main.java" />
+        <option value="$PROJECT_DIR$/src/com/baol/chatdistance/other/Utilities.java" />
         <option value="$PROJECT_DIR$/src/com/baol/chatdistance/events/Death.java" />
+        <option value="$PROJECT_DIR$/src/com/baol/chatdistance/events/Chat.java" />
         <option value="$PROJECT_DIR$/src/com/baol/chatdistance/events/JoinAndDisconnect.java" />
         <option value="$PROJECT_DIR$/src/plugin.yml" />
         <option value="$PROJECT_DIR$/src/config.yml" />
-        <option value="$PROJECT_DIR$/src/com/baol/chatdistance/events/Chat.java" />
-        <option value="$PROJECT_DIR$/src/com/baol/chatdistance/other/Utilities.java" />
       </list>
     </option>
   </component>
@@ -170,9 +199,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -263,6 +289,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -541,7 +570,14 @@
       <option name="project" value="LOCAL" />
       <updated>1489752953746</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Optimization of code, bug fixing and fixing comments">
+      <created>1489755799059</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1489755799059</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -551,7 +587,6 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16384181" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -563,7 +598,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20611285" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20532915" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -574,6 +609,7 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16384181" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -589,7 +625,8 @@
     <MESSAGE value="Optimizing code and bug fixing" />
     <MESSAGE value="Merge remote-tracking branch 'origin/master'" />
     <MESSAGE value="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;src/com/baol/chatdistance/other/Utilities.java&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;src/com/baol/chatdistance/other/Utilities.java&#10;" />
+    <MESSAGE value="Optimization of code, bug fixing and fixing comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="Optimization of code, bug fixing and fixing comments" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -609,9 +646,13 @@
           <caret line="443" column="0" lean-forward="true" selection-start-line="443" selection-start-column="0" selection-end-line="443" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#Chat#0;class#Chat#0" expanded="false" />
+            <element signature="method#onPlayerChat#0;class#Chat#0" expanded="false" />
             <element signature="method#obscureMessage#0;class#Chat#0" expanded="false" />
             <element signature="method#globalMessage#0;class#Chat#0" expanded="false" />
-            <element signature="method#onPlayerCommandPreprocess#0;class#Chat#0" expanded="false" />
+            <element signature="method#specificMessage#0;class#Chat#0" expanded="false" />
+            <element signature="method#chatEvent#0;class#Chat#0" expanded="false" />
+            <element signature="method#createNewAsyncPlayerChatEvent#0;class#Chat#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -624,6 +665,13 @@
             <element signature="imports" expanded="true" />
             <element signature="method#createTextList#0;class#Utilities#0" expanded="false" />
             <element signature="method#formatNumber#0;class#Utilities#0" expanded="false" />
+            <element signature="method#makeMessageTypography#0;class#Utilities#0" expanded="false" />
+            <element signature="method#getChatColor#0;class#Utilities#0" expanded="false" />
+            <element signature="method#chatCodeFormat#0;class#Utilities#0" expanded="false" />
+            <element signature="method#countCharEnd#0;class#Utilities#0" expanded="false" />
+            <element signature="method#countChar#0;class#Utilities#0" expanded="false" />
+            <element signature="method#countWhisperSymbols#0;class#Utilities#0" expanded="false" />
+            <element signature="method#stripMessage#0;class#Utilities#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -632,7 +680,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="600">
           <caret line="51" column="31" lean-forward="false" selection-start-line="51" selection-start-column="31" selection-end-line="51" selection-end-column="31" />
-          <folding />
+          <folding>
+            <element signature="method#Death#0;class#Death#0" expanded="false" />
+            <element signature="method#onDeath#0;class#Death#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -640,7 +691,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1605">
           <caret line="119" column="17" lean-forward="false" selection-start-line="119" selection-start-column="17" selection-end-line="119" selection-end-column="17" />
-          <folding />
+          <folding>
+            <element signature="method#onQuit#0;class#JoinAndDisconnect#0" expanded="false" />
+            <element signature="method#joinOrLeaveMessage#0;class#JoinAndDisconnect#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -664,7 +718,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="690">
           <caret line="46" column="1" lean-forward="false" selection-start-line="46" selection-start-column="1" selection-end-line="46" selection-end-column="1" />
-          <folding />
+          <folding>
+            <element signature="method#onEnable#0;class#Main#0" expanded="false" />
+            <element signature="method#onDisable#0;class#Main#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -674,9 +731,13 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#Chat#0;class#Chat#0" expanded="false" />
+            <element signature="method#onPlayerChat#0;class#Chat#0" expanded="false" />
             <element signature="method#obscureMessage#0;class#Chat#0" expanded="false" />
             <element signature="method#globalMessage#0;class#Chat#0" expanded="false" />
-            <element signature="method#onPlayerCommandPreprocess#0;class#Chat#0" expanded="false" />
+            <element signature="method#specificMessage#0;class#Chat#0" expanded="false" />
+            <element signature="method#chatEvent#0;class#Chat#0" expanded="false" />
+            <element signature="method#createNewAsyncPlayerChatEvent#0;class#Chat#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -689,6 +750,13 @@
             <element signature="imports" expanded="true" />
             <element signature="method#createTextList#0;class#Utilities#0" expanded="false" />
             <element signature="method#formatNumber#0;class#Utilities#0" expanded="false" />
+            <element signature="method#makeMessageTypography#0;class#Utilities#0" expanded="false" />
+            <element signature="method#getChatColor#0;class#Utilities#0" expanded="false" />
+            <element signature="method#chatCodeFormat#0;class#Utilities#0" expanded="false" />
+            <element signature="method#countCharEnd#0;class#Utilities#0" expanded="false" />
+            <element signature="method#countChar#0;class#Utilities#0" expanded="false" />
+            <element signature="method#countWhisperSymbols#0;class#Utilities#0" expanded="false" />
+            <element signature="method#stripMessage#0;class#Utilities#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -697,7 +765,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
           <caret line="49" column="54" lean-forward="false" selection-start-line="49" selection-start-column="54" selection-end-line="49" selection-end-column="54" />
-          <folding />
+          <folding>
+            <element signature="method#Death#0;class#Death#0" expanded="false" />
+            <element signature="method#onDeath#0;class#Death#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -705,7 +776,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="570">
           <caret line="87" column="98" lean-forward="false" selection-start-line="87" selection-start-column="98" selection-end-line="87" selection-end-column="98" />
-          <folding />
+          <folding>
+            <element signature="method#onQuit#0;class#JoinAndDisconnect#0" expanded="false" />
+            <element signature="method#joinOrLeaveMessage#0;class#JoinAndDisconnect#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -729,7 +803,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="690">
           <caret line="46" column="1" lean-forward="false" selection-start-line="46" selection-start-column="1" selection-end-line="46" selection-end-column="1" />
-          <folding />
+          <folding>
+            <element signature="method#onEnable#0;class#Main#0" expanded="false" />
+            <element signature="method#onDisable#0;class#Main#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -739,9 +816,13 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#Chat#0;class#Chat#0" expanded="false" />
+            <element signature="method#onPlayerChat#0;class#Chat#0" expanded="false" />
             <element signature="method#obscureMessage#0;class#Chat#0" expanded="false" />
             <element signature="method#globalMessage#0;class#Chat#0" expanded="false" />
-            <element signature="method#onPlayerCommandPreprocess#0;class#Chat#0" expanded="false" />
+            <element signature="method#specificMessage#0;class#Chat#0" expanded="false" />
+            <element signature="method#chatEvent#0;class#Chat#0" expanded="false" />
+            <element signature="method#createNewAsyncPlayerChatEvent#0;class#Chat#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -754,6 +835,13 @@
             <element signature="imports" expanded="true" />
             <element signature="method#createTextList#0;class#Utilities#0" expanded="false" />
             <element signature="method#formatNumber#0;class#Utilities#0" expanded="false" />
+            <element signature="method#makeMessageTypography#0;class#Utilities#0" expanded="false" />
+            <element signature="method#getChatColor#0;class#Utilities#0" expanded="false" />
+            <element signature="method#chatCodeFormat#0;class#Utilities#0" expanded="false" />
+            <element signature="method#countCharEnd#0;class#Utilities#0" expanded="false" />
+            <element signature="method#countChar#0;class#Utilities#0" expanded="false" />
+            <element signature="method#countWhisperSymbols#0;class#Utilities#0" expanded="false" />
+            <element signature="method#stripMessage#0;class#Utilities#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -762,7 +850,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
           <caret line="49" column="54" lean-forward="false" selection-start-line="49" selection-start-column="54" selection-end-line="49" selection-end-column="54" />
-          <folding />
+          <folding>
+            <element signature="method#Death#0;class#Death#0" expanded="false" />
+            <element signature="method#onDeath#0;class#Death#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -770,7 +861,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="570">
           <caret line="87" column="98" lean-forward="false" selection-start-line="87" selection-start-column="98" selection-end-line="87" selection-end-column="98" />
-          <folding />
+          <folding>
+            <element signature="method#onQuit#0;class#JoinAndDisconnect#0" expanded="false" />
+            <element signature="method#joinOrLeaveMessage#0;class#JoinAndDisconnect#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -794,7 +888,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="46" column="1" lean-forward="false" selection-start-line="46" selection-start-column="1" selection-end-line="46" selection-end-column="1" />
-          <folding />
+          <folding>
+            <element signature="method#onEnable#0;class#Main#0" expanded="false" />
+            <element signature="method#onDisable#0;class#Main#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -804,9 +901,13 @@
           <caret line="364" column="0" lean-forward="false" selection-start-line="364" selection-start-column="0" selection-end-line="364" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#Chat#0;class#Chat#0" expanded="false" />
+            <element signature="method#onPlayerChat#0;class#Chat#0" expanded="false" />
             <element signature="method#obscureMessage#0;class#Chat#0" expanded="false" />
             <element signature="method#globalMessage#0;class#Chat#0" expanded="false" />
-            <element signature="method#onPlayerCommandPreprocess#0;class#Chat#0" expanded="false" />
+            <element signature="method#specificMessage#0;class#Chat#0" expanded="false" />
+            <element signature="method#chatEvent#0;class#Chat#0" expanded="false" />
+            <element signature="method#createNewAsyncPlayerChatEvent#0;class#Chat#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -819,6 +920,13 @@
             <element signature="imports" expanded="true" />
             <element signature="method#createTextList#0;class#Utilities#0" expanded="false" />
             <element signature="method#formatNumber#0;class#Utilities#0" expanded="false" />
+            <element signature="method#makeMessageTypography#0;class#Utilities#0" expanded="false" />
+            <element signature="method#getChatColor#0;class#Utilities#0" expanded="false" />
+            <element signature="method#chatCodeFormat#0;class#Utilities#0" expanded="false" />
+            <element signature="method#countCharEnd#0;class#Utilities#0" expanded="false" />
+            <element signature="method#countChar#0;class#Utilities#0" expanded="false" />
+            <element signature="method#countWhisperSymbols#0;class#Utilities#0" expanded="false" />
+            <element signature="method#stripMessage#0;class#Utilities#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -827,7 +935,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
           <caret line="49" column="54" lean-forward="false" selection-start-line="49" selection-start-column="54" selection-end-line="49" selection-end-column="54" />
-          <folding />
+          <folding>
+            <element signature="method#Death#0;class#Death#0" expanded="false" />
+            <element signature="method#onDeath#0;class#Death#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -835,7 +946,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="570">
           <caret line="87" column="98" lean-forward="false" selection-start-line="87" selection-start-column="98" selection-end-line="87" selection-end-column="98" />
-          <folding />
+          <folding>
+            <element signature="method#onQuit#0;class#JoinAndDisconnect#0" expanded="false" />
+            <element signature="method#joinOrLeaveMessage#0;class#JoinAndDisconnect#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -859,7 +973,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
           <caret line="33" column="5" lean-forward="false" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
-          <folding />
+          <folding>
+            <element signature="method#onEnable#0;class#Main#0" expanded="false" />
+            <element signature="method#onDisable#0;class#Main#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -869,9 +986,13 @@
           <caret line="391" column="49" lean-forward="false" selection-start-line="391" selection-start-column="49" selection-end-line="391" selection-end-column="49" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#Chat#0;class#Chat#0" expanded="false" />
+            <element signature="method#onPlayerChat#0;class#Chat#0" expanded="false" />
             <element signature="method#obscureMessage#0;class#Chat#0" expanded="false" />
             <element signature="method#globalMessage#0;class#Chat#0" expanded="false" />
-            <element signature="method#onPlayerCommandPreprocess#0;class#Chat#0" expanded="false" />
+            <element signature="method#specificMessage#0;class#Chat#0" expanded="false" />
+            <element signature="method#chatEvent#0;class#Chat#0" expanded="false" />
+            <element signature="method#createNewAsyncPlayerChatEvent#0;class#Chat#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -884,6 +1005,13 @@
             <element signature="imports" expanded="true" />
             <element signature="method#createTextList#0;class#Utilities#0" expanded="false" />
             <element signature="method#formatNumber#0;class#Utilities#0" expanded="false" />
+            <element signature="method#makeMessageTypography#0;class#Utilities#0" expanded="false" />
+            <element signature="method#getChatColor#0;class#Utilities#0" expanded="false" />
+            <element signature="method#chatCodeFormat#0;class#Utilities#0" expanded="false" />
+            <element signature="method#countCharEnd#0;class#Utilities#0" expanded="false" />
+            <element signature="method#countChar#0;class#Utilities#0" expanded="false" />
+            <element signature="method#countWhisperSymbols#0;class#Utilities#0" expanded="false" />
+            <element signature="method#stripMessage#0;class#Utilities#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -892,7 +1020,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="33" column="5" lean-forward="false" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
-          <folding />
+          <folding>
+            <element signature="method#onEnable#0;class#Main#0" expanded="false" />
+            <element signature="method#onDisable#0;class#Main#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -902,9 +1033,13 @@
           <caret line="391" column="49" lean-forward="true" selection-start-line="391" selection-start-column="49" selection-end-line="391" selection-end-column="49" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#Chat#0;class#Chat#0" expanded="false" />
+            <element signature="method#onPlayerChat#0;class#Chat#0" expanded="false" />
             <element signature="method#obscureMessage#0;class#Chat#0" expanded="false" />
             <element signature="method#globalMessage#0;class#Chat#0" expanded="false" />
-            <element signature="method#onPlayerCommandPreprocess#0;class#Chat#0" expanded="false" />
+            <element signature="method#specificMessage#0;class#Chat#0" expanded="false" />
+            <element signature="method#chatEvent#0;class#Chat#0" expanded="false" />
+            <element signature="method#createNewAsyncPlayerChatEvent#0;class#Chat#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -917,6 +1052,13 @@
             <element signature="imports" expanded="true" />
             <element signature="method#createTextList#0;class#Utilities#0" expanded="false" />
             <element signature="method#formatNumber#0;class#Utilities#0" expanded="false" />
+            <element signature="method#makeMessageTypography#0;class#Utilities#0" expanded="false" />
+            <element signature="method#getChatColor#0;class#Utilities#0" expanded="false" />
+            <element signature="method#chatCodeFormat#0;class#Utilities#0" expanded="false" />
+            <element signature="method#countCharEnd#0;class#Utilities#0" expanded="false" />
+            <element signature="method#countChar#0;class#Utilities#0" expanded="false" />
+            <element signature="method#countWhisperSymbols#0;class#Utilities#0" expanded="false" />
+            <element signature="method#stripMessage#0;class#Utilities#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -925,7 +1067,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
           <caret line="49" column="54" lean-forward="false" selection-start-line="49" selection-start-column="54" selection-end-line="49" selection-end-column="54" />
-          <folding />
+          <folding>
+            <element signature="method#Death#0;class#Death#0" expanded="false" />
+            <element signature="method#onDeath#0;class#Death#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -933,7 +1078,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="570">
           <caret line="87" column="98" lean-forward="false" selection-start-line="87" selection-start-column="98" selection-end-line="87" selection-end-column="98" />
-          <folding />
+          <folding>
+            <element signature="method#onQuit#0;class#JoinAndDisconnect#0" expanded="false" />
+            <element signature="method#joinOrLeaveMessage#0;class#JoinAndDisconnect#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -957,7 +1105,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="method#onEnable#0;class#Main#0" expanded="false" />
+            <element signature="method#onDisable#0;class#Main#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -965,7 +1116,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="method#Death#0;class#Death#0" expanded="false" />
+            <element signature="method#onDeath#0;class#Death#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -993,6 +1147,13 @@
             <element signature="imports" expanded="true" />
             <element signature="method#createTextList#0;class#Utilities#0" expanded="false" />
             <element signature="method#formatNumber#0;class#Utilities#0" expanded="false" />
+            <element signature="method#makeMessageTypography#0;class#Utilities#0" expanded="false" />
+            <element signature="method#getChatColor#0;class#Utilities#0" expanded="false" />
+            <element signature="method#chatCodeFormat#0;class#Utilities#0" expanded="false" />
+            <element signature="method#countCharEnd#0;class#Utilities#0" expanded="false" />
+            <element signature="method#countChar#0;class#Utilities#0" expanded="false" />
+            <element signature="method#countWhisperSymbols#0;class#Utilities#0" expanded="false" />
+            <element signature="method#stripMessage#0;class#Utilities#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1001,7 +1162,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1095">
           <caret line="83" column="126" lean-forward="false" selection-start-line="83" selection-start-column="126" selection-end-line="83" selection-end-column="126" />
-          <folding />
+          <folding>
+            <element signature="method#onQuit#0;class#JoinAndDisconnect#0" expanded="false" />
+            <element signature="method#joinOrLeaveMessage#0;class#JoinAndDisconnect#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1012,68 +1176,88 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/baol/chatdistance/other/Utilities.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1080">
+          <caret line="139" column="7" lean-forward="false" selection-start-line="139" selection-start-column="7" selection-end-line="139" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#createTextList#0;class#Utilities#0" expanded="false" />
+            <element signature="method#formatNumber#0;class#Utilities#0" expanded="false" />
+            <element signature="method#makeMessageTypography#0;class#Utilities#0" expanded="false" />
+            <element signature="method#getChatColor#0;class#Utilities#0" expanded="false" />
+            <element signature="method#chatCodeFormat#0;class#Utilities#0" expanded="false" />
+            <element signature="method#countCharEnd#0;class#Utilities#0" expanded="false" />
+            <element signature="method#countChar#0;class#Utilities#0" expanded="false" />
+            <element signature="method#countWhisperSymbols#0;class#Utilities#0" expanded="false" />
+            <element signature="method#stripMessage#0;class#Utilities#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/baol/chatdistance/events/Death.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+          <folding>
+            <element signature="method#Death#0;class#Death#0" expanded="false" />
+            <element signature="method#onDeath#0;class#Death#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/baol/chatdistance/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="13" column="38" lean-forward="false" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
-          <folding />
+        <state relative-caret-position="285">
+          <caret line="32" column="5" lean-forward="false" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
+          <folding>
+            <element signature="method#onEnable#0;class#Main#0" expanded="false" />
+            <element signature="method#onDisable#0;class#Main#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/baol/chatdistance/events/JoinAndDisconnect.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="750">
+          <caret line="62" column="30" lean-forward="false" selection-start-line="62" selection-start-column="30" selection-end-line="62" selection-end-column="30" />
+          <folding>
+            <element signature="method#onQuit#0;class#JoinAndDisconnect#0" expanded="false" />
+            <element signature="method#joinOrLeaveMessage#0;class#JoinAndDisconnect#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/baol/chatdistance/events/Chat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="50" column="0" lean-forward="false" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Chat#0;class#Chat#0" expanded="false" />
+            <element signature="method#onPlayerChat#0;class#Chat#0" expanded="false" />
+            <element signature="method#obscureMessage#0;class#Chat#0" expanded="false" />
+            <element signature="method#globalMessage#0;class#Chat#0" expanded="false" />
+            <element signature="method#specificMessage#0;class#Chat#0" expanded="false" />
+            <element signature="method#chatEvent#0;class#Chat#0" expanded="false" />
+            <element signature="method#createNewAsyncPlayerChatEvent#0;class#Chat#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/plugin.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
-          <caret line="1" column="12" lean-forward="false" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
+          <caret line="1" column="14" lean-forward="false" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="14" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/config.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="41" lean-forward="false" selection-start-line="7" selection-start-column="41" selection-end-line="7" selection-end-column="41" />
+        <state relative-caret-position="90">
+          <caret line="6" column="21" lean-forward="false" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/baol/chatdistance/events/JoinAndDisconnect.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/baol/chatdistance/events/Death.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="33" column="60" lean-forward="false" selection-start-line="33" selection-start-column="60" selection-end-line="33" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/baol/chatdistance/events/Chat.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2580">
-          <caret line="172" column="0" lean-forward="false" selection-start-line="172" selection-start-column="0" selection-end-line="172" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#obscureMessage#0;class#Chat#0" expanded="false" />
-            <element signature="method#globalMessage#0;class#Chat#0" expanded="false" />
-            <element signature="method#onPlayerCommandPreprocess#0;class#Chat#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/baol/chatdistance/other/Utilities.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="7" lean-forward="true" selection-start-line="19" selection-start-column="7" selection-end-line="19" selection-end-column="7" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#createTextList#0;class#Utilities#0" expanded="false" />
-            <element signature="method#formatNumber#0;class#Utilities#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1083,7 +1267,7 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
-          <last-edited>ChatDistance</last-edited>
+          <last-edited>ChatDistance v1.2.1</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

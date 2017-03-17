@@ -1,9 +1,9 @@
 name: ChatDistance
-version: 1.1
+version: 1.2.1
 main: com.baol.chatdistance.Main
 author: Axe_Villager
 website: https://dev.bukkit.org/projects/chat-distance
-description: A plugin that lets you modify the chat and more
+description: A plugin that lets you modify the chat, and more
 
 permissions:
     chatdistance.*:

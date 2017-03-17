@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="ChatDistance">
-    <output-path>$USER_HOME$/Documents/Spill/Minecraft/Servere/Test Server/Test Server | Sp 1.11.2/plugins</output-path>
-    <root id="archive" name="ChatDistance.jar">
-      <element id="module-output" name="Minecraft Plugin ChatDistance" />
-    </root>
-  </artifact>
-</component>
