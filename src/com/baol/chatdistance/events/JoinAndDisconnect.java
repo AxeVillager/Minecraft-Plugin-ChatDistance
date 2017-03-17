@@ -32,9 +32,7 @@ public class JoinAndDisconnect implements Listener {
      */
     public JoinAndDisconnect(final JavaPlugin plugin) {
 
-        // The configuration file
         final FileConfiguration config = plugin.getConfig();
-
         LOCAL_JOIN_AND_LEAVE_MESSAGES = config.getBoolean("local join/leave messages", true);
         JOIN_AND_LEAVE_MESSAGES_RANGE = config.getDouble("join/leave message range", 250);
         JOIN_MESSAGE = config.getString("join message", "&ename joined the game");

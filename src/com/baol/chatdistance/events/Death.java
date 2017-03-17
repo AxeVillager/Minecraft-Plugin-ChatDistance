@@ -31,9 +31,7 @@ public class Death implements Listener {
      */
     public Death(final JavaPlugin plugin) {
 
-        // The configuration file
         final FileConfiguration config = plugin.getConfig();
-
         LOCAL_DEATH_MESSAGES = config.getBoolean("local death messages", true);
         DEATH_MESSAGES_RANGE = config.getDouble("death messages range", 250);
         DEATH_MESSAGE_COLOUR = getChatColor(config.getString("death messages colour", "WHITE"), ChatColor.WHITE);

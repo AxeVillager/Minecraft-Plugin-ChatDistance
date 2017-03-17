@@ -7,11 +7,13 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import static com.baol.chatdistance.other.Utilities.*;
 
@@ -19,31 +21,30 @@ import static com.baol.chatdistance.other.Utilities.*;
  * Chat created by AxeVillager on 2017/03/10
  */
 
-@SuppressWarnings("deprecation")
 public class Chat implements Listener {
 
     private final String CHAT_FORMAT;
     private final double OBSCURE_CHAT_RANGE_DIVISOR;
-    private final double PERCENTAGE_AMPLIFIER;
+    private final double OBSCURE_CHAT_PERCENTAGE_AMPLIFIER;
     private final boolean USE_WHISPER_PARENTHESISES;
     private final String WHISPER_SYMBOL;
     private final boolean USE_WHISPER_SYMBOL;
-    private final boolean WHISPER_ITALICS;
+    private final boolean USE_WHISPER_ITALICS;
     private final double WHISPER_CHAT_RANGE_DECREASE;
     private final int MAX_WHISPER_LEVEL;
-    private final double TALK_CHAT_RANGE;
+    private final double CHAT_RANGE;
     private final boolean SHOUT_BOLD;
-    private final boolean SHOUT_ONLY_AT_END;
+    private final boolean SHOUT_EXCLAMATION_ONLY_AT_END;
     private final int SHOUT_HUNGER_LOSS;
     private final String SHOUT_TOO_LOW_HUNGER_MESSAGE;
     private final double SHOUT_RANGE_INCREASE;
     private final int MAX_SHOUT_LEVEL;
     private final String GLOBAL_MESSAGE_PREFIX;
     private final String GLOBAL_CHAT_FORMAT;
-    private final boolean SENDER_CHAT_RANGE;
-    private final boolean WHISPER_AND_SHOUT_LEVELS;
-    private final boolean MESSAGE_RECEIVED;
-    private final boolean RECEIVER_DISTANCE;
+    private final boolean SHOW_SENDER_CHAT_RANGE;
+    private final boolean SHOW_WHISPER_AND_SHOUT_LEVELS;
+    private final boolean SHOW_MESSAGE_RECEIVED;
+    private final boolean SHOW_RECEIVER_DISTANCE;
 
 
     /**
@@ -51,74 +52,29 @@ public class Chat implements Listener {
      */
     public Chat(final JavaPlugin plugin) {
 
-        // The configuration file
         final FileConfiguration config = plugin.getConfig();
-
-        // The chat format from the config
         CHAT_FORMAT = config.getString("chat format", "&fname&7: message").replace("name", "%1$s").replace("message", "%2$s").replace("&", "§");
-
-        // The obscure chat range divisor value from the config
         OBSCURE_CHAT_RANGE_DIVISOR = config.getDouble("obscure chat range divisor", 2.5);
-
-        // The percentage amplifier value from the config
-        PERCENTAGE_AMPLIFIER = config.getDouble("percentage amplifier", 1.75);
-
-        // The "use parenthesises" to whisper value in the config
+        OBSCURE_CHAT_PERCENTAGE_AMPLIFIER = config.getDouble("percentage amplifier", 1.75);
         USE_WHISPER_PARENTHESISES = config.getBoolean("whisper with parenthesises", true);
-
-        // The own defined whisper symbol, default '~'
         WHISPER_SYMBOL = config.getString("whisper symbol", "~");
-
-        // The "use tilde" to whisper value in the config
         USE_WHISPER_SYMBOL = config.getBoolean("whisper with symbol", true);
-
-        // The italics whisper value from the config
-        WHISPER_ITALICS = config.getBoolean("whisper italic", true);
-
-        // The whisper chat range decrease from the config
+        USE_WHISPER_ITALICS = config.getBoolean("whisper italic", true);
         WHISPER_CHAT_RANGE_DECREASE = config.getDouble("whisper chat range decrease", 30);
-
-        // The max whisper level from the config
         MAX_WHISPER_LEVEL = config.getInt("whisper max level", 2);
-
-        // The talk chat range from the config
-        TALK_CHAT_RANGE = config.getDouble("chat range", 50);
-
-        // The bold shout value from the config
+        CHAT_RANGE = config.getDouble("chat range", 50);
         SHOUT_BOLD = config.getBoolean("shout bold", true);
-
-        // The value that indicates whether exclamations in or at the end of the message counts.
-        SHOUT_ONLY_AT_END = plugin.getConfig().getBoolean("exclamation marks at the end", false);
-
-        // The shout hunger loss from the config
+        SHOUT_EXCLAMATION_ONLY_AT_END = plugin.getConfig().getBoolean("exclamation marks at the end", false);
         SHOUT_HUNGER_LOSS = config.getInt("shout hunger loss", 2);
-
-        // The error message when you can't shout because of too low food level from the config
         SHOUT_TOO_LOW_HUNGER_MESSAGE = config.getString("too low food level to shout", "&cYour food level is too low to shout!").replace("&", "§");
-
-        // The shout chat range increase from the config
         SHOUT_RANGE_INCREASE = config.getDouble("shout chat range increase", 20);
-
-        // The max shout level from the config
         MAX_SHOUT_LEVEL = config.getInt("shout max level", 4);
-
-        // The global message prefix from the config
         GLOBAL_MESSAGE_PREFIX = config.getString("global prefix", "global:");
-
-        // The global chat format from the config
         GLOBAL_CHAT_FORMAT = config.getString("global chat format", "&fname &e(global)&7: message").replace("name", "%1$s").replace("message", "%2$s").replace("&", "§");
-
-        // Show the sender's chat range value from the config
-        SENDER_CHAT_RANGE = config.getBoolean("sender chat range", true);
-
-        // Show the sender's whisper or shout levels from the config
-        WHISPER_AND_SHOUT_LEVELS = config.getBoolean("whisper and shout levels", true);
-
-        // Show the messages received value from the config
-        MESSAGE_RECEIVED = config.getBoolean("message received", false);
-
-        // Show the receiver's distance to the sender value from the config
-        RECEIVER_DISTANCE = config.getBoolean("receiver distance", false);
+        SHOW_SENDER_CHAT_RANGE = config.getBoolean("sender chat range", true);
+        SHOW_WHISPER_AND_SHOUT_LEVELS = config.getBoolean("whisper and shout levels", true);
+        SHOW_MESSAGE_RECEIVED = config.getBoolean("message received", false);
+        SHOW_RECEIVER_DISTANCE = config.getBoolean("receiver distance", false);
     }
 
 
@@ -126,149 +82,147 @@ public class Chat implements Listener {
      * When any player sends a message in the chat
      */
     @EventHandler
-    private void onPlayerChat(final PlayerChatEvent event) {
+    private void onPlayerChat(final AsyncPlayerChatEvent event) {
 
-        // Array List for the sender' information
-        final ArrayList<String> senderInfo = new ArrayList<>();
 
-        // Array List for the receiver's information
-        final ArrayList<String> receiverInfo = new ArrayList<>();
+        /*
+         * Format the message correctly where '&' is only replaced
+         * with '§' when the '&' is followed by a formatting code
+         * letter and the sender has permission to format chat messages.
+         */
 
-        // The sender
         final Player sender = event.getPlayer();
-
-        // The message
         String message = event.getMessage();
-
-        // Check if the sender has permission to use chat formatting codes
-        if (sender.hasPermission("chatdistance.formatting"))
-
-            // Make the message formatted correctly where & is only replaced with § when there is a formatting code
-            message = makeFormatted(message);
+        if (sender.hasPermission("chatdistance.formatting")) message = chatCodeFormat(message);
 
 
-        // The amount of chat format symbols (§) in the message
+
+
+        /*
+         * Cancel the chat event if the message contains more or
+         * equal to half its size of the chat formatting symbol (§).
+         */
+
         int countSymbol = 0;
-
-        // For every letter in the message
-        for (char letter : message.toCharArray()) {
-
-            // Check if the letter is the chat format symbol -> Add one to the counter
+        for (final char letter : message.toCharArray()) {
             if (letter == '§') countSymbol++;
-
         }
-
-        // Check if the format symbols are more or equal to half the message
         if (countSymbol << 1 >= message.length()) {
-
-            // Cancel the message
             event.setCancelled(true);
-
-            // Stop
             return;
-
         }
 
 
-        // Check if the sender has permission to send a global message and the message starts with the global prefix
+
+
+        /*
+         * Globally deliver the message and cancel the regular chat event
+         * if the sender has permission to send global messages and the
+         * message starts with the global message prefix.
+         */
+
         if (sender.hasPermission("chatdistance.global") && message.startsWith(GLOBAL_MESSAGE_PREFIX)) {
-
-            // Globally deliver the message
-            globalMessage(sender, message.substring(GLOBAL_MESSAGE_PREFIX.length()));
-
-            // Cancel the normal chat event
+            globalMessage(sender,message.substring(GLOBAL_MESSAGE_PREFIX.length()));
             event.setCancelled(true);
-
-            // Stop
             return;
-
         }
 
 
-        // The talk range
-        double chatRange = TALK_CHAT_RANGE;
-
-        // Set the exclamation marks value equal to the max value if exceeded
-        final int shoutLevel = Math.min(SHOUT_ONLY_AT_END ? countCharEnd(message, '!') : countChar(message, '!'), MAX_SHOUT_LEVEL);
 
 
-        // Check if the amount of exclamation marks are greater than zero and the sender has permission to shout
+        /*
+         * The default chat range
+         */
+
+        double chatRange = CHAT_RANGE;
+
+
+
+
+        /*
+         *  Turn the regular chat message into a shout message.
+         *
+         * The shouting level is indicated by the amount of exclamation marks
+         * in or at the end of the chat message - depending on the value of
+         * the option in the configuration. The value can not exceed the
+         * max shouting level.
+         *
+         * If the sender has permission to shout the console will be given
+         * information of the shout level if the option for doing so is turned
+         * on in the configuration. The player only loses hunger if he/she is
+         * in survival or adventure mode. The hunger loss is decided by
+         * the shouting level multiplied with the default factor in the
+         * configuration - the shout is cancelled if the player doesn't
+         * have high enough food level.
+         *
+         * The shouting chat message increases the range of the message
+         * respectively with its shouting level and if shouting in bold
+         * text is turned on in the configuration the chat message will
+         * appear in bold text.
+         */
+
+        final ArrayList<String> senderInfo = new ArrayList<>();
+        final int shoutLevel = Math.min(SHOUT_EXCLAMATION_ONLY_AT_END
+                ? countCharEnd(message, '!')
+                : countChar(message, '!'), MAX_SHOUT_LEVEL);
+
         if (shoutLevel > 0 && sender.hasPermission("chatdistance.shout")) {
+            if (SHOW_WHISPER_AND_SHOUT_LEVELS) senderInfo.add("shout (" + shoutLevel + ")");
+            if (sender.getGameMode() == GameMode.SURVIVAL
+                    || sender.getGameMode() == GameMode.ADVENTURE) {
 
-            // Check if the "show whisper and shout levels" option is true -> add shout level to the sender's information
-            if (WHISPER_AND_SHOUT_LEVELS) senderInfo.add("shout (" + shoutLevel + ")");
-
-            // Check if the sender is in survival or adventure mode
-            if (sender.getGameMode() == GameMode.SURVIVAL || sender.getGameMode() == GameMode.ADVENTURE) {
-
-                // The hunger loss
                 int hungerLoss = SHOUT_HUNGER_LOSS * shoutLevel;
-
-                // The sender's food level
                 int senderHunger = sender.getFoodLevel();
 
-                // Check if the hunger loss is greater than the sender's food level
                 if (hungerLoss > senderHunger) {
-
-                    // Warn the player he doesn't have high enough food level to shout
                     sender.sendMessage(SHOUT_TOO_LOW_HUNGER_MESSAGE);
-
-                    // Cancel the event
                     event.setCancelled(true);
-
-                    // Stop
                     return;
-
                 }
-
-                // Set the hunger level of the player equal to the respective loss
                 sender.setFoodLevel(sender.getFoodLevel() - (SHOUT_HUNGER_LOSS * shoutLevel));
-
             }
-
-
-            // Increase the speaking range based on the power of the shout
             chatRange += (SHOUT_RANGE_INCREASE * shoutLevel);
-
-            // Check if the bold chat when shouting is enabled
-            if (SHOUT_BOLD)
-
-                // Make the message bold on every letter
-                message = makeMessageTypography(message, ChatColor.BOLD);
-
+            if (SHOUT_BOLD) message = makeMessageTypography(message, ChatColor.BOLD);
         }
 
-        // Set the whisper symbols value equal to the max value if exceeded
-        final int whisperLevel = Math.min(countWhisperSymbols(message, WHISPER_SYMBOL, USE_WHISPER_PARENTHESISES, USE_WHISPER_SYMBOL), MAX_WHISPER_LEVEL);
 
 
-        // Check if the message is a whispering message and the sender has permission to whisper
+
+        /*
+         * Turn the regular chat message into a whisper message.
+         *
+         * The whispering level is indicated by the amount of
+         * parenthesis nests around the message or/and the
+         * amount of own defined whisper symbols in the start
+         * of the message. The value can not exceed the max
+         * whispering level.
+         *
+         * After a permission check and if the option to show
+         * whisper and shout levels to the console is enabled
+         * then the whisper level will be shown to the console.
+         *
+         * The chat range is decreased by the respective
+         * amount according to the whisper range decrease
+         * multiplied with the whisper level.
+         *
+         * If the option to show whispering in italic text
+         * is enabled then the chat message will appear
+         * in italics and the whispering symbols will
+         * be removed from the message.
+         *
+         * Cancel the message if the message contains nothing
+         * but the whispering symbols.
+         */
+        final int whisperLevel = Math.min(countWhisperSymbols(message,WHISPER_SYMBOL, USE_WHISPER_PARENTHESISES, USE_WHISPER_SYMBOL), MAX_WHISPER_LEVEL);
         if (whisperLevel > 0 && sender.hasPermission("chatdistance.whisper")) {
-
-            // Check if the "show whisper and shout levels" option is true -> Add whisper level to the information
-            if (WHISPER_AND_SHOUT_LEVELS) senderInfo.add("whisper (" + whisperLevel + ")");
-
-            // Decrease the chat range
+            if (SHOW_WHISPER_AND_SHOUT_LEVELS) senderInfo.add("whisper (" + whisperLevel + ")");
             chatRange -= WHISPER_CHAT_RANGE_DECREASE * whisperLevel;
-
-            // Check if the chat range is smaller than one -> Set the chat range equal to one
             if (chatRange < 1) chatRange = 1;
-
-            // Check if "italics when whispering" is enabled
-            if (WHISPER_ITALICS) {
-
-                // Make the message italic on every letter and remove the whispering symbols
+            if (USE_WHISPER_ITALICS) {
                 message = makeMessageTypography(stripMessage(message, WHISPER_SYMBOL, whisperLevel, USE_WHISPER_PARENTHESISES, USE_WHISPER_SYMBOL), ChatColor.ITALIC);
-
-                // Check if the length of the message is less or equal to two (nothing but chat format)
                 if (message.length() <= 2) {
-
-                    // Cancel the chat event
                     event.setCancelled(true);
-
-                    // Stop
                     return;
-
                 }
             }
         }
@@ -280,7 +234,7 @@ public class Chat implements Listener {
 
 
         // Check if the "show sender's chat range" option is true... then add the chat range to the sender information
-        if (SENDER_CHAT_RANGE) senderInfo.add("chat range: " + formatNumber(chatRange));
+        if (SHOW_SENDER_CHAT_RANGE) senderInfo.add("chat range: " + formatNumber(chatRange));
 
 
         // The message that is sent (example... Axe_Villager: Hello!)
@@ -292,6 +246,8 @@ public class Chat implements Listener {
                 : makeMessageTypography(sentMessage, ChatColor.RESET));
 
 
+        // The array list that will contain information of the received message
+        final ArrayList<String> receiverInfo = new ArrayList<>();
 
         // For every recipient in the chat event
         for (final Player recipient : event.getRecipients()) {
@@ -311,14 +267,14 @@ public class Chat implements Listener {
                 final double recipientDistance = sender.getLocation().distance(recipient.getLocation());
 
                 // Check if the "show receiver's distance to the sender" option is true
-                if (RECEIVER_DISTANCE) {
+                if (SHOW_RECEIVER_DISTANCE) {
 
                     // Add the distance to the receiver information
                     receiverInfo.add("distance: " + formatNumber(recipientDistance));
 
                 }
 
-                // Check if the distance is smaller or equal to the hearing range
+                // Check if the recipient is inside the chat range
                 if (recipientDistance <= chatRange) {
 
                     // The noise range
@@ -330,6 +286,9 @@ public class Chat implements Listener {
                 }
 
             }
+
+            // Clear the receiver information
+            receiverInfo.clear();
 
         }
 
@@ -349,7 +308,7 @@ public class Chat implements Listener {
         final double noiseDistance = playerDistance - (chatRange - noiseRange);
 
         // Amplified percentage to make the message more readable when obscure
-        final double percentage = noiseDistance / (noiseRange * PERCENTAGE_AMPLIFIER);
+        final double percentage = noiseDistance / (noiseRange * OBSCURE_CHAT_PERCENTAGE_AMPLIFIER);
 
         // Build the eventual message result
         final StringBuilder result = new StringBuilder();
@@ -434,7 +393,7 @@ public class Chat implements Listener {
     private void specificMessage(final Player recipient, final Player sender, final String message, final ArrayList<String> info) {
 
         // Create a new chat event
-        final PlayerChatEvent event = createNewChatEvent(recipient, sender, message, info);
+        final AsyncPlayerChatEvent event = createNewAsyncPlayerChatEvent(recipient, sender, message, info);
 
         // Call the chat event
         chatEvent(event);
@@ -445,17 +404,12 @@ public class Chat implements Listener {
     /**
      * Call the chat event
      */
-    private void chatEvent(final PlayerChatEvent event) {
+    private void chatEvent(final AsyncPlayerChatEvent event) {
 
         // Check if the event is cancelled
         if (event.isCancelled()) {
-
-            // Notify the console
             Bukkit.getLogger().info("Ignoring chat event! - Cancelled by another plugin.");
-
-            // Stop
             return;
-
         }
 
         // Format the new message
@@ -468,24 +422,28 @@ public class Chat implements Listener {
 
 
     /**
-     * Create a new chat event
+     * Create a new async player chat event
      */
-    private PlayerChatEvent createNewChatEvent(final Player recipient, final Player sender, final String message, final ArrayList<String> info) {
+    private AsyncPlayerChatEvent createNewAsyncPlayerChatEvent(final Player recipient, final Player sender, final String message, final ArrayList<String> info) {
 
         // The received message
-        final String received = String.format(CHAT_FORMAT, sender.getDisplayName(), message);
+        final String receivedMessage = String.format(CHAT_FORMAT, sender.getDisplayName(), message);
 
         // Check if the "message received" option is true and the sender is not the recipient
-        if (MESSAGE_RECEIVED && sender != recipient) {
+        if (SHOW_MESSAGE_RECEIVED && sender != recipient) {
 
-                // Notify the console with information of who is the receiver and such (if enabled)
-                Bukkit.getConsoleSender().sendMessage(info.size() > 0 ? "- (" + createTextList(info) + ") " + recipient.getName() + " received; " + makeMessageTypography(received, ChatColor.RESET)
-                        : "- " + recipient.getName() + " received; " + makeMessageTypography(received, ChatColor.RESET));
+            // Notify the console with information of who is the receiver and such (if enabled)
+            Bukkit.getConsoleSender().sendMessage(info.size() > 0 ? "- (" + createTextList(info) + ") " + recipient.getName() + " received; " + makeMessageTypography(receivedMessage, ChatColor.RESET)
+                    : "- " + recipient.getName() + " received; " + makeMessageTypography(receivedMessage, ChatColor.RESET));
 
         }
 
-        // The new chat event
-        final PlayerChatEvent newChatEvent = new PlayerChatEvent(sender, message);
+        Set<Player> receiverSet = new HashSet<>();
+
+        //receiverSet.add(recipient);
+
+        // The new chat event (async, who, message, receivers)
+        final AsyncPlayerChatEvent newChatEvent = new AsyncPlayerChatEvent(true, sender, message, receiverSet);
 
         // Remove every recipient from the chat event
         newChatEvent.getRecipients().clear();
@@ -496,7 +454,7 @@ public class Chat implements Listener {
         // Set the format of the chat event to the chat format in the config
         newChatEvent.setFormat(CHAT_FORMAT);
 
-        // Return the new chat event
+        // Return the new async player chat event
         return newChatEvent;
     }
 
