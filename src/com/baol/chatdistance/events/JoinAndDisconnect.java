@@ -20,12 +20,15 @@ import static com.baol.chatdistance.other.Utilities.*;
 
 public class JoinAndDisconnect implements Listener {
 
+
     private final boolean LOCAL_JOIN_AND_LEAVE_MESSAGES;
     private final double JOIN_AND_LEAVE_MESSAGES_RANGE;
     private final String JOIN_MESSAGE;
     private final String LEAVE_MESSAGE;
     private final boolean LIST_RECEIVERS;
     private final boolean RECEIVED_DISTANCE;
+
+
 
     /**
      * Constructor for the JoinAndDisconnect class
@@ -41,9 +44,13 @@ public class JoinAndDisconnect implements Listener {
         RECEIVED_DISTANCE = config.getBoolean("received join/leave message distance", true);
     }
 
+
+
+
     /**
      * When a player joins the server
      */
+
     @EventHandler
     public void onJoin(final PlayerJoinEvent event) {
 
@@ -60,9 +67,13 @@ public class JoinAndDisconnect implements Listener {
         event.setJoinMessage("");
     }
 
+
+
+
     /**
      * When a player leaves the server
      */
+
     @EventHandler
     public void onQuit(final PlayerQuitEvent event) {
 
@@ -78,6 +89,8 @@ public class JoinAndDisconnect implements Listener {
         // Set the leave message to nothing so that it appears to have been cancelled
         event.setQuitMessage("");
     }
+
+
 
 
     /**
@@ -106,7 +119,8 @@ public class JoinAndDisconnect implements Listener {
 
                         // Add the recipient to the recipients list with distance information if the receive distance option is true
                         // otherwise send only the recipient's name
-                        recipientsList.add(RECEIVED_DISTANCE ? recipient.getName() + " (distance: " + formatNumber(recipientDistance) + ")"
+                        recipientsList.add(RECEIVED_DISTANCE
+                                ? recipient.getName() + " (distance: " + formatNumber(recipientDistance) + ")"
                                 : recipient.getName() + " ");
 
 
@@ -117,10 +131,10 @@ public class JoinAndDisconnect implements Listener {
 
                 }
 
-                // Otherwise... the local join and leaves messages option is false
+                // Otherwise... (the local join and leaves messages option is false)
                 else {
 
-                    // Send the join/leave message to the recipient
+                    // Send the join/leave message to every player
                     recipient.sendMessage(message);
 
                 }
@@ -133,11 +147,7 @@ public class JoinAndDisconnect implements Listener {
         Bukkit.getConsoleSender().sendMessage(makeMessageTypography(message, ChatColor.RESET));
 
         // Check if the local join and leave messages option is true and the "join/leave message receivers" option is true
-        if (LOCAL_JOIN_AND_LEAVE_MESSAGES && LIST_RECEIVERS) {
-
-            // Notify the console who received the join/leave message
+        if (LOCAL_JOIN_AND_LEAVE_MESSAGES && LIST_RECEIVERS)
             Bukkit.getConsoleSender().sendMessage("The players that received the " + type + " message (" + recipientsList.size() + "): " + createTextList(recipientsList));
-
-        }
     }
 }

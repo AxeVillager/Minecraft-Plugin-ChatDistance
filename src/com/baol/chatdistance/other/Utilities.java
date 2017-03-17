@@ -15,9 +15,11 @@ import java.util.Locale;
 
 public class Utilities {
 
+
     /**
      * Join a list together to a nice string, example: potato, carrot, onion
      */
+
     public static String createTextList(final ArrayList<String> al) {
 
         final StringBuilder builder = new StringBuilder();
@@ -27,9 +29,12 @@ public class Utilities {
     }
 
 
+
+
     /**
      * Return a formatted number according to English number formatting
      */
+
     public static String formatNumber(final double d) {
 
         final DecimalFormat df = new DecimalFormat("#.#");
@@ -42,9 +47,12 @@ public class Utilities {
     }
 
 
+
+
     /**
      * Make a message where every letter is in the same typography, for example italic or bold
      */
+
     public static String makeMessageTypography(final String m, final ChatColor cc) {
 
         final StringBuilder sm = new StringBuilder();
@@ -61,9 +69,12 @@ public class Utilities {
     }
 
 
+
+
     /**
      * Return a chat colour by its name
      */
+
     public static ChatColor getChatColor(final String colourName, final ChatColor defaultColour) {
 
         try {
@@ -77,9 +88,12 @@ public class Utilities {
     }
 
 
+
+
     /**
      * Make a message with correct formatting, where & is only replaced with § when there is a chat/format code
      */
+
     public static String chatCodeFormat(final String m) {
 
         char[] ma = m.toCharArray();
@@ -100,9 +114,12 @@ public class Utilities {
     }
 
 
+
+
     /**
      * Counts the amount of a specific character at the end of a string
      */
+
     public static int countCharEnd(final String s, final char c) {
 
         int i = 0;
@@ -118,9 +135,12 @@ public class Utilities {
     }
 
 
+
+
     /**
      * Counts the amount of a specific character in the message
      */
+
     public static int countChar(final String s, final char c) {
 
         int i = 0;
@@ -131,9 +151,12 @@ public class Utilities {
     }
 
 
+
+
     /**
      * Return the amount of whispering symbols in the string
      */
+
     public static int countWhisperSymbols(final String s, final String sym, final boolean bPar, final boolean bSym) {
 
         final char c = sym.charAt(0);
@@ -154,9 +177,12 @@ public class Utilities {
     }
 
 
+
+
     /**
      * Return a string that has been stripped from its whisper symbols
      */
+
     public static String stripMessage(final String s, final String sym, final int i, final boolean bPar, final boolean bSym) {
 
         final char c = sym.charAt(0);

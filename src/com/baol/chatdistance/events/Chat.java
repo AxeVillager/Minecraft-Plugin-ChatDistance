@@ -23,6 +23,7 @@ import static com.baol.chatdistance.other.Utilities.*;
 
 public class Chat implements Listener {
 
+
     private final String CHAT_FORMAT;
     private final double OBSCURE_CHAT_RANGE_DIVISOR;
     private final double OBSCURE_CHAT_PERCENTAGE_AMPLIFIER;
@@ -45,6 +46,7 @@ public class Chat implements Listener {
     private final boolean SHOW_WHISPER_AND_SHOUT_LEVELS;
     private final boolean SHOW_MESSAGE_RECEIVED;
     private final boolean SHOW_RECEIVER_DISTANCE;
+
 
 
     /**
@@ -78,9 +80,12 @@ public class Chat implements Listener {
     }
 
 
+
+
     /**
-     * When any player sends a message in the chat
+     * Whenever a player sends a message in the chat
      */
+
     @EventHandler
     private void onPlayerChat(final AsyncPlayerChatEvent event) {
 
@@ -131,7 +136,7 @@ public class Chat implements Listener {
 
 
         /*
-         * The default chat range
+         * Define the default chat range.
          */
 
         double chatRange = CHAT_RANGE;
@@ -213,6 +218,7 @@ public class Chat implements Listener {
          * Cancel the message if the message contains nothing
          * but the whispering symbols.
          */
+
         final int whisperLevel = Math.min(countWhisperSymbols(message,WHISPER_SYMBOL, USE_WHISPER_PARENTHESISES, USE_WHISPER_SYMBOL), MAX_WHISPER_LEVEL);
         if (whisperLevel > 0 && sender.hasPermission("chatdistance.whisper")) {
             if (SHOW_WHISPER_AND_SHOUT_LEVELS) senderInfo.add("whisper (" + whisperLevel + ")");
@@ -228,261 +234,209 @@ public class Chat implements Listener {
         }
 
 
-        // Check if the message starts with the chat format symbol and the supposedly first letter
-        // in the message is space and the first letter is space... then remove the space
+
+
+        /*
+         * If the message starts with a space then remove it.
+         */
+
         if (message.startsWith("§") && message.length() > 2 && message.charAt(2) == ' ') message = message.replaceFirst(" ", "");
 
 
-        // Check if the "show sender's chat range" option is true... then add the chat range to the sender information
+
+
+        /*
+         * Add the chat range to the information of the sender's chat message if enabled in the configuration.
+         */
+
         if (SHOW_SENDER_CHAT_RANGE) senderInfo.add("chat range: " + formatNumber(chatRange));
 
 
-        // The message that is sent (example... Axe_Villager: Hello!)
+
+
+        /*
+         * The full chat message the recipients of the message will receive.
+         */
+
         final String sentMessage = String.format(CHAT_FORMAT, sender.getDisplayName(), message);
 
 
-        // Give information to the console who sends the message and what the message is (if enabled)
-        Bukkit.getConsoleSender().sendMessage(senderInfo.size() > 0 ? "(" + createTextList(senderInfo) + ") " + makeMessageTypography(sentMessage, ChatColor.RESET)
+
+
+        /*
+         * Send the information of the sender's chat message if there is any information
+         * alongside the chat message without any chat formatting or colouring to the console.
+         */
+
+        Bukkit.getConsoleSender().sendMessage(senderInfo.size() > 0
+                ? "(" + createTextList(senderInfo) + ") " + makeMessageTypography(sentMessage, ChatColor.RESET)
                 : makeMessageTypography(sentMessage, ChatColor.RESET));
 
 
-        // The array list that will contain information of the received message
+
+
+        /*
+         * Send the chat message to everyone that are inside the chat range
+         * and make the message obscure for players inside the noise range.
+         *
+         * Send information of the recipients' received message information
+         * and notify the console if the options for doing so are enabled
+         * in the configuration.
+         */
+
         final ArrayList<String> receiverInfo = new ArrayList<>();
-
-        // For every recipient in the chat event
         for (final Player recipient : event.getRecipients()) {
-
-            // Check if the sender is the recipient
             if (sender.equals(recipient)) {
-
-                // Deliver the message to the sender in its pure form
                 specificMessage(recipient, sender, message, receiverInfo);
-
             }
-
-            // Otherwise... check if the sender and recipient are in the same world
             else if (sender.getWorld().equals(recipient.getWorld())) {
-
-                // The distance between the sender and the recipient
                 final double recipientDistance = sender.getLocation().distance(recipient.getLocation());
-
-                // Check if the "show receiver's distance to the sender" option is true
                 if (SHOW_RECEIVER_DISTANCE) {
-
-                    // Add the distance to the receiver information
                     receiverInfo.add("distance: " + formatNumber(recipientDistance));
-
                 }
-
-                // Check if the recipient is inside the chat range
                 if (recipientDistance <= chatRange) {
-
-                    // The noise range
                     final double noiseRange = chatRange / OBSCURE_CHAT_RANGE_DIVISOR;
-
-                    // Deliver the potentially obscure message to the recipient
                     specificMessage(recipient, sender, obscureMessage(message, chatRange, noiseRange, recipientDistance), receiverInfo);
-
                 }
-
             }
-
-            // Clear the receiver information
             receiverInfo.clear();
-
         }
 
-        // Cancel the normal chat event
-        event.setCancelled(true);
 
+
+
+        /*
+         * Cancel the normal chat event because we are using our own one!
+         */
+        event.setCancelled(true);
     }
+
+
 
 
     /**
      * Create an obscure message based on the recipients' distance to the sender
      */
+
     private String obscureMessage(final String message, final double chatRange,
                                   final double noiseRange, final double playerDistance) {
 
-        // The player distance inside the noise range
         final double noiseDistance = playerDistance - (chatRange - noiseRange);
-
-        // Amplified percentage to make the message more readable when obscure
         final double percentage = noiseDistance / (noiseRange * OBSCURE_CHAT_PERCENTAGE_AMPLIFIER);
-
-        // Build the eventual message result
         final StringBuilder result = new StringBuilder();
 
-        // Check if the player's distance is smaller or equal to the max chat range
         if (playerDistance <= chatRange) {
-
-            // The position of the character to be ignored from being obscure
             int ignore = 0;
-
-            // The message as a character array
             char[] ma = message.toCharArray();
-
-            // For every character in the message
             for (int i = 0; i < ma.length; i++) {
-
-                // Random number between 0 and 1
                 final double rnd = Math.random();
-
                 char c = ma[i];
-
-                // Check if the character is the chat format symbol '§'... then set the character
-                // position to the ignore value so that chat formatting is never removed
-                if (c == '§') ignore = i + 1;
-
-                // Check if the random number is smaller or equal to the percentage and
-                // the character is not the chat format symbol '§' so that chat formatting is never removed and
-                // the character is not at the position of the character to be ignored
-                if (rnd <= percentage && c != '§' && c != ma[ignore]) {
-
-                    // Set the character to space
+                if (c == '§')
+                    ignore = i + 1;
+                if (rnd <= percentage && c != '§' && c != ma[ignore])
                     c = ' ';
-                }
-
-                // Build the message result by adding every character to the message
                 result.append(c);
-
             }
-
         }
-
-        // Return the message result
         return new String (result);
     }
 
 
+
+
     /**
-     * Globally deliver a message from a sender
+     * Globally deliver a message from a sender following the
+     * global chat format specified in the configuration and
+     * notify the console the chat message is global.
      */
+
     private void globalMessage(final Player sender, String message) {
 
-        // Doesn't work properly (as command) with '/' as prefix, because it doesn't go through a chat event
+        /* OBS! Doesn't work properly with '/' as the first letter in the
+         global message prefix because it doesn't go through a chat event! */
 
-        // Check if the message starts with a space
-        if (message.startsWith(" ")) {
-
-            // Remove the space
+        if (message.startsWith(" "))
             message = message.substring(1);
-
-        }
-
-        // Format the message according to the global chat format
         message = String.format(GLOBAL_CHAT_FORMAT, sender.getDisplayName(), message);
-
-        // For every player on the server
-        for (final Player player : Bukkit.getOnlinePlayers()) {
-
-            // Send the message to the player
+        for (final Player player : Bukkit.getOnlinePlayers())
             player.sendMessage(message);
-
-        }
-
-        // Show the global message to the console
         Bukkit.getConsoleSender().sendMessage("(global) " + makeMessageTypography(message, ChatColor.RESET));
 
     }
 
 
+
+
     /**
-     * Deliver a message to a specified recipient from a specific sender
+     * Deliver a chat message to a specified recipient from a specific sender
      */
+
     private void specificMessage(final Player recipient, final Player sender, final String message, final ArrayList<String> info) {
 
-        // Create a new chat event
         final AsyncPlayerChatEvent event = createNewAsyncPlayerChatEvent(recipient, sender, message, info);
-
-        // Call the chat event
         chatEvent(event);
-
     }
 
 
+
+
     /**
-     * Call the chat event
+     * Call the async player chat event and notify the console if
+     * the event is cancelled. Format the chat message according to
+     * the chat event and send it to every recipient.
      */
+
     private void chatEvent(final AsyncPlayerChatEvent event) {
 
-        // Check if the event is cancelled
         if (event.isCancelled()) {
             Bukkit.getLogger().info("Ignoring chat event! - Cancelled by another plugin.");
             return;
         }
-
-        // Format the new message
         final String message = String.format(event.getFormat(), event.getPlayer().getDisplayName(), event.getMessage());
-
-        // Send the message to every recipient
         for (final Player recipient : event.getRecipients()) recipient.sendMessage(message);
-
     }
 
 
+
+
     /**
-     * Create a new async player chat event
+     * Create the new async player chat event and send information
+     * to the console if the option to show who received the message
+     * and other information is enabled.
      */
+
     private AsyncPlayerChatEvent createNewAsyncPlayerChatEvent(final Player recipient, final Player sender, final String message, final ArrayList<String> info) {
 
-        // The received message
         final String receivedMessage = String.format(CHAT_FORMAT, sender.getDisplayName(), message);
-
-        // Check if the "message received" option is true and the sender is not the recipient
-        if (SHOW_MESSAGE_RECEIVED && sender != recipient) {
-
-            // Notify the console with information of who is the receiver and such (if enabled)
-            Bukkit.getConsoleSender().sendMessage(info.size() > 0 ? "- (" + createTextList(info) + ") " + recipient.getName() + " received; " + makeMessageTypography(receivedMessage, ChatColor.RESET)
+        if (SHOW_MESSAGE_RECEIVED && sender != recipient)
+            Bukkit.getConsoleSender().sendMessage(info.size() > 0
+                    ? "- (" + createTextList(info) + ") " + recipient.getName() + " received; " + makeMessageTypography(receivedMessage, ChatColor.RESET)
                     : "- " + recipient.getName() + " received; " + makeMessageTypography(receivedMessage, ChatColor.RESET));
-
-        }
-
-        Set<Player> receiverSet = new HashSet<>();
-
-        //receiverSet.add(recipient);
-
-        // The new chat event (async, who, message, receivers)
+        final Set<Player> receiverSet = new HashSet<>();
         final AsyncPlayerChatEvent newChatEvent = new AsyncPlayerChatEvent(true, sender, message, receiverSet);
-
-        // Remove every recipient from the chat event
         newChatEvent.getRecipients().clear();
-
-        // Add the specific recipient so the message can be based on his or her distance to the sender
         newChatEvent.getRecipients().add(recipient);
-
-        // Set the format of the chat event to the chat format in the config
         newChatEvent.setFormat(CHAT_FORMAT);
-
-        // Return the new async player chat event
         return newChatEvent;
     }
 
 
+
+
     /**
-     * Before the eventual command is executed (processed)
+     * If a player attempts to send a global chat message and
+     * the global message prefix starts with '/' then send
+     * the global chat message instead of performing a command.
      */
+
     @EventHandler
     private void onPlayerCommandPreprocess(final PlayerCommandPreprocessEvent event) {
 
-        // Check if the global prefix is nothing
-        if (GLOBAL_MESSAGE_PREFIX == null) {
-
-            // Stop
+        if (GLOBAL_MESSAGE_PREFIX == null)
             return;
-
-        }
-
-        // Check if the message starts with the global prefix
         if (event.getMessage().startsWith(GLOBAL_MESSAGE_PREFIX)) {
-
-            // Globally deliver the message without the global message prefix
             globalMessage(event.getPlayer(), event.getMessage().substring(GLOBAL_MESSAGE_PREFIX.length()));
-
-            // Cancel the command preprocess event
             event.setCancelled(true);
-
         }
-
     }
 }

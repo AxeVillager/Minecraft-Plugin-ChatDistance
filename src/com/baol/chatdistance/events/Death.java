@@ -19,6 +19,7 @@ import static com.baol.chatdistance.other.Utilities.*;
 
 public class Death implements Listener {
 
+
     private final boolean LOCAL_DEATH_MESSAGES;
     private final double DEATH_MESSAGES_RANGE;
     private final ChatColor DEATH_MESSAGE_COLOUR;
@@ -26,9 +27,12 @@ public class Death implements Listener {
     private final boolean LIST_RECEIVERS;
     private final boolean RECEIVED_DISTANCE;
 
+
+
     /**
      * Constructor for the Death class
      */
+
     public Death(final JavaPlugin plugin) {
 
         final FileConfiguration config = plugin.getConfig();
@@ -41,9 +45,12 @@ public class Death implements Listener {
     }
 
 
+
+
     /**
      * When a player dies
      */
+
     @EventHandler
     public void onDeath(final PlayerDeathEvent event) {
 
@@ -106,8 +113,8 @@ public class Death implements Listener {
 
 
         // Check if the local death messages option is true and the "list death message receivers" option is true -> Notify the console who received the death message
-        if (LOCAL_DEATH_MESSAGES && LIST_RECEIVERS) Bukkit.getConsoleSender().sendMessage
-                ("The players that received the death message ("+ recipientsList.size() + "): " + createTextList(recipientsList));
+        if (LOCAL_DEATH_MESSAGES && LIST_RECEIVERS)
+            Bukkit.getConsoleSender().sendMessage("The players that received the death message ("+ recipientsList.size() + "): " + createTextList(recipientsList));
 
     }
 
