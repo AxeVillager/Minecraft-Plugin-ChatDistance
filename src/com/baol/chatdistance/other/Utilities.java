@@ -51,7 +51,6 @@ public class Utilities {
         sm.append(cc);
         // The position of the character to be ignored (the char after §)
         int i = 0;
-
         for (int j = 0; j < m.length(); j++) {
             if (m.charAt(j) == '§') {
                 i = j + 1;
