@@ -1,27 +1,57 @@
 name: ChatDistance
-version: 1.2.1
-main: com.baol.chatdistance.Main
+version: 2.0
+main: com.axevillager.chatdistance.Main
 author: Axe_Villager
 website: https://dev.bukkit.org/projects/chat-distance
-description: A plugin that lets you modify the chat, and more
+description: A plugin that bases the chat on distances.
 
 permissions:
     chatdistance.*:
         children:
             chatdistance.shout: true
             chatdistance.whisper: true
+            chatdistance.staff: true
+            chatdistance.broadcast: true
             chatdistance.global: true
+            chatdistance.ooc: true
             chatdistance.formatting: true
         default: op
     chatdistance.whisper:
-        description: Allows you to whisper chat messages
+        description: Allows you to whisper chat messages.
         default: true
     chatdistance.shout:
-        description: Allows you to shout chat messages
+        description: Allows you to shout chat messages.
         default: true
+    chatdistance.staff:
+        description: Allows you to send staff messages.
+        default: op
+    chatdistance.broadcast:
+        description: Allows you to broadcast chat messages.
+        default: op
     chatdistance.global:
-        description: Allows you to send a global message
+        description: Allows you to send global chat messages.
         default: op
+    chatdistance.outofcontext:
+        description: Allows you to send out of context chat messages.
+        default: true
     chatdistance.formatting:
-        description: Allows you to use colour and formatting codes in chat messages
+        description: Allows you to use colour and formatting codes in chat messages.
         default: op
+
+commands:
+  staff:
+    usage: <command> [message...]
+    aliases: [staffmessage]
+    description: Enter the staff channel or send a staff message.
+  broadcast:
+    usage: /<command> [message...]
+    aliases: [broadcastmessage]
+    description: Enter the broadcast chat channel or broadcast a message.
+  global:
+    usage: /<command> [message...]
+    aliases: [g]
+    description: Enter the global chat channel or send a global message.
+  ooc:
+    usage: /<command> [message...]
+    aliases: [outofcontext]
+    description: Enter the OOC chat channel or send an OOC message.

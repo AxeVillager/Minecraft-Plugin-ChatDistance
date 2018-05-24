@@ -1,0 +1,31 @@
+chatdistance.*
+    Access to everything below.
+    default: op
+
+chatdistance.whisper
+    Allows you to whisper chat messages.
+    default: true
+
+chatdistance.shout
+    Allows you to shout chat messages.
+    default: true
+
+chatdistance.outofcontext
+    Allows you to send out of context chat messages.
+    default: true
+
+chatdistance.staff
+    Allows you to send staff messages.
+    default: op
+
+chatdistance.broadcast
+    Allows you to broadcast chat messages.
+    default: op
+
+chatdistance.global
+    Allows you to send global chat messages.
+    default: op
+
+chatdistance.formatting
+    Allows you to use colour and formatting codes in chat messages.
+    default: op
